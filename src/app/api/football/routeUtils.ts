@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { DEFAULT_FOOTBALL_CONFIG } from "@/config/football";
+import { ApiFootballHttpError } from "@/providers/apiFootballErrors";
 import { apiFootballProvider } from "@/providers/apiFootballProvider";
 import { localDemoProvider } from "@/providers/fallback/localDemoProvider";
 import type { ProviderResponse } from "@/types/dataProvider";
@@ -37,12 +38,14 @@ export const withApiFootballFallback = async <T>(
     return NextResponse.json(await operation());
   } catch (error) {
     const fallbackResponse = await fallback();
+    const isApiHttpError = error instanceof ApiFootballHttpError;
+
     return NextResponse.json({
       ...fallbackResponse,
       status: {
         id: "api-football",
         label: "API-Football",
-        state: "error",
+        state: isApiHttpError ? error.state : "error",
         message:
           error instanceof Error
             ? `${error.message} Falling back to local demo data.`

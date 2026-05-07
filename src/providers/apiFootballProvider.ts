@@ -2,6 +2,8 @@ import "server-only";
 
 import { buildRatingsFromStats } from "@/engine/ratingBuilder";
 import { isFresh, readCache, writeCache } from "@/providers/cache/fileCache";
+import { ApiFootballHttpError, classifyApiFootballError } from "@/providers/apiFootballErrors";
+import { previousSeason } from "@/providers/season";
 import type {
   FixtureSummary,
   FootballDataProvider,
@@ -79,14 +81,6 @@ const tacticForTeamIndex = (index: number): TacticStyle => {
 
 const numericExternalId = (id: string): string => id.replace("api-football-team-", "").replace("api-football-fixture-", "");
 
-const previousSeason = (season: string | undefined): string | undefined => {
-  if (!season || !/^\d{4}$/.test(season)) {
-    return undefined;
-  }
-
-  return String(Number(season) - 1);
-};
-
 export class ApiFootballProvider implements FootballDataProvider {
   private readonly apiKey = process.env.API_FOOTBALL_KEY;
 
@@ -144,22 +138,31 @@ export class ApiFootballProvider implements FootballDataProvider {
         };
       }
 
-      throw new Error("API-Football quota exceeded and no cache is available.");
+      throw new ApiFootballHttpError("API-Football quota exceeded and no cache is available.", 429, "quota_exceeded");
     }
 
     if (!response.ok) {
+      let responseDetails: unknown;
+      try {
+        const payload = (await response.json()) as { errors?: unknown; message?: unknown };
+        responseDetails = payload.errors ?? payload.message;
+      } catch {
+        responseDetails = undefined;
+      }
+      const classified = classifyApiFootballError(response.status, responseDetails);
+
       if (cached) {
         return {
           data: cached.data,
           status: {
             ...cacheStatus(cached.cachedAt),
-            state: "error",
-            message: `API-Football returned ${response.status}; cached data is being used.`
+            state: classified.state,
+            message: `${classified.message} Using cached data.`
           }
         };
       }
 
-      throw new Error(`API-Football request failed with status ${response.status}.`);
+      throw new ApiFootballHttpError(classified.message, response.status, classified.state);
     }
 
     const envelope = (await response.json()) as ApiFootballEnvelope<T>;

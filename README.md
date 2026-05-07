@@ -90,7 +90,16 @@ Quality checks:
 ```bash
 npm run typecheck
 npm run lint
+npm run test
 ```
+
+API-Football status messages are now classified to help debugging:
+
+- `missing_key`: key missing/invalid
+- `quota_exceeded`: free quota reached
+- `forbidden`: endpoint/plan/season access denied (HTTP 403)
+- `cached`: cached data used
+- `error`: uncategorized provider error
 
 ## Architecture
 

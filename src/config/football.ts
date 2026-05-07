@@ -1,7 +1,7 @@
 export const DEFAULT_FOOTBALL_CONFIG = {
   leagueName: "Premier League",
   leagueId: "39",
-  season: "2025"
+  season: "2026"
 };
 
 export const SUPPORTED_LEAGUES = [
@@ -12,4 +12,8 @@ export const SUPPORTED_LEAGUES = [
   }
 ];
 
-export const SUPPORTED_SEASONS = ["2025", "2024", "2023", "2022"];
+export const buildSupportedSeasons = (baseYear: number, count = 5): string[] =>
+  Array.from({ length: Math.max(1, count) }, (_, index) => String(baseYear - index));
+
+const CURRENT_YEAR = new Date().getFullYear();
+export const SUPPORTED_SEASONS = buildSupportedSeasons(CURRENT_YEAR, 5);

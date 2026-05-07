@@ -348,10 +348,10 @@ export default function SimulatorPage(): JSX.Element {
 
     setIsWorking(true);
     try {
-      const season = selectedFixture?.season;
+      const seasonForSquads = selectedFixture?.season ?? season;
       const [homeWithSquad, awayWithSquad] = await Promise.all([
-        hydrateTeamWithSquad(selectedHomeTeam, { season, attacksRight: true }),
-        hydrateTeamWithSquad(selectedAwayTeam, { season, attacksRight: false })
+        hydrateTeamWithSquad(selectedHomeTeam, { season: seasonForSquads, attacksRight: true }),
+        hydrateTeamWithSquad(selectedAwayTeam, { season: seasonForSquads, attacksRight: false })
       ]);
       const result = runMonteCarloPrediction(homeWithSquad, awayWithSquad, {
         simulations: 500,

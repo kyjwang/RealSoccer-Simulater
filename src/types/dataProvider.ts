@@ -13,6 +13,7 @@ export type ProviderConnectionState =
   | "connected"
   | "missing_key"
   | "quota_exceeded"
+  | "forbidden"
   | "cached"
   | "fallback"
   | "error";

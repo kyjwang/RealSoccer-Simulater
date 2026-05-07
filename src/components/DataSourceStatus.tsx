@@ -15,6 +15,7 @@ const stateTone = (state: ProviderStatus["state"] | undefined): string => {
       return "bg-sky-400";
     case "missing_key":
     case "quota_exceeded":
+    case "forbidden":
       return "bg-amber-400";
     case "error":
       return "bg-rose-400";
