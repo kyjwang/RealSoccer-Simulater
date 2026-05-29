@@ -2,6 +2,8 @@
 
 RealBall Sim is a 2D tactical/event football match simulator. It is not a FIFA-style physics game. The app represents football as event streams: generated prediction events for future fixtures, real historical events for replay, and local fallback events for offline demo use.
 
+The renderer uses a requestAnimationFrame playback loop with eased interpolation between simulation frames to keep player and ball motion smooth.
+
 ## Modes
 
 1. Future Match Prediction
@@ -208,6 +210,17 @@ The pitch uses frame snapshots derived from these events, and it also draws the 
 - speed: estimated from position, age, and dribbling proxies when direct speed data is unavailable
 
 This is intentionally transparent and tunable. Free APIs often do not provide tracking data, pressure data, sprint speed, or full recent-form context, so some ratings are approximations.
+
+## Synthetic Tactical Layer
+
+API-Football is useful for fixtures/squads/aggregate player stats, but it does not provide full continuous XY tracking for all players every frame. RealBall therefore estimates:
+
+- off-ball team shape and compaction
+- possession-transition push/pull behavior
+- pass landing routes with receiver lead
+- speed and acceleration curves using player stamina and attributes
+
+This estimation layer is intentional and is the main reason visual movement can still look realistic without full tracking feeds.
 
 ## Limitations
 

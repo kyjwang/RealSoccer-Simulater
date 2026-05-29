@@ -10,27 +10,27 @@ type DataSourceStatusProps = {
 const stateTone = (state: ProviderStatus["state"] | undefined): string => {
   switch (state) {
     case "connected":
-      return "bg-emerald-500";
+      return "bg-emerald-400";
     case "cached":
       return "bg-sky-400";
     case "missing_key":
     case "quota_exceeded":
     case "forbidden":
-      return "bg-amber-400";
+      return "bg-cardYellow";
     case "error":
-      return "bg-rose-400";
+      return "bg-cardRed";
     default:
-      return "bg-slate-400";
+      return "bg-emerald-600";
   }
 };
 
 const StatusLine = ({ status }: { status?: ProviderStatus }): JSX.Element => (
-  <div className="min-w-0 rounded border border-slate-700 bg-slate-900 px-3 py-2">
+  <div className="min-w-0 rounded-lg border border-emerald-500/15 bg-stadium/60 px-3 py-2">
     <div className="flex items-center gap-2">
-      <span className={`h-2.5 w-2.5 rounded-full ${stateTone(status?.state)}`} />
-      <p className="truncate text-sm font-medium text-slate-100">{status?.label ?? "Data source"}</p>
+      <span className={`h-2 w-2 rounded-full ${stateTone(status?.state)}`} />
+      <p className="truncate text-sm font-medium text-netWhite">{status?.label ?? "Data source"}</p>
     </div>
-    <p className="mt-1 text-xs text-slate-400">{status?.message ?? "Checking data source..."}</p>
+    <p className="mt-0.5 text-xs text-emerald-100/60">{status?.message ?? "Checking data source..."}</p>
   </div>
 );
 
@@ -41,16 +41,16 @@ export function DataSourceStatus({
   isRefreshing
 }: DataSourceStatusProps): JSX.Element {
   return (
-    <section className="grid gap-3 rounded-md border border-slate-700 bg-slate-950/60 p-3 lg:grid-cols-[1fr_1fr_auto]">
+    <section className="grid gap-2 rounded-lg border border-emerald-500/20 bg-gradient-to-r from-surface via-panel to-surface p-2.5 lg:grid-cols-[1fr_1fr_auto]">
       <StatusLine status={apiFootball} />
       <StatusLine status={statsBomb} />
       <button
         type="button"
         onClick={onRefresh}
         disabled={isRefreshing}
-        className="rounded border border-slate-600 px-3 py-2 text-sm font-medium text-slate-100 transition hover:border-slate-400 disabled:cursor-not-allowed disabled:opacity-50"
+        className="rounded-lg border border-emerald-500/30 px-4 py-2 text-sm font-semibold text-emerald-100 transition hover:border-emerald-400/50 hover:bg-emerald-500/10 disabled:cursor-not-allowed disabled:opacity-40"
       >
-        {isRefreshing ? "Refreshing" : "Refresh Data"}
+        {isRefreshing ? "⟳ Refreshing" : "⟳ Refresh"}
       </button>
     </section>
   );

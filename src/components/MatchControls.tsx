@@ -28,41 +28,41 @@ export function MatchControls({
   onReplaySpeedChange
 }: MatchControlsProps): JSX.Element {
   return (
-    <div className="flex flex-wrap items-center gap-3 rounded-xl border border-slate-700 bg-slate-900/70 p-4">
+    <div className="flex flex-wrap items-center gap-3 rounded-xl border border-emerald-500/20 bg-gradient-to-r from-surface via-panel to-surface p-4 shadow-panel">
       <button
         type="button"
         onClick={onSimulate}
         disabled={simDisabled}
-        className="rounded-md bg-accent px-4 py-2 text-sm font-semibold text-slate-900 transition hover:brightness-95 disabled:cursor-not-allowed disabled:opacity-60"
+        className="rounded-lg bg-emerald-500 px-5 py-2.5 text-sm font-bold text-stadium transition hover:bg-emerald-400 hover:shadow-glow disabled:cursor-not-allowed disabled:opacity-50"
       >
-        {primaryLabel}
+        ⚽ {primaryLabel}
       </button>
 
       <button
         type="button"
         onClick={onTogglePlay}
         disabled={!hasMatch}
-        className="rounded-md border border-slate-600 px-4 py-2 text-sm font-medium text-slate-100 transition hover:border-slate-400 disabled:cursor-not-allowed disabled:opacity-50"
+        className="rounded-lg border border-emerald-500/30 px-4 py-2.5 text-sm font-semibold text-emerald-100 transition hover:border-emerald-400/50 hover:bg-emerald-500/10 disabled:cursor-not-allowed disabled:opacity-40"
       >
-        {isPlaying ? "Pause Replay" : "Play Replay"}
+        {isPlaying ? "⏸ Pause" : "▶ Play"}
       </button>
 
       <button
         type="button"
         onClick={onRestartReplay}
         disabled={!hasMatch}
-        className="rounded-md border border-slate-600 px-4 py-2 text-sm font-medium text-slate-100 transition hover:border-slate-400 disabled:cursor-not-allowed disabled:opacity-50"
+        className="rounded-lg border border-emerald-500/30 px-4 py-2.5 text-sm font-semibold text-emerald-100 transition hover:border-emerald-400/50 hover:bg-emerald-500/10 disabled:cursor-not-allowed disabled:opacity-40"
       >
-        Restart Replay
+        ↺ Restart
       </button>
 
-      <label className="ml-auto flex items-center gap-2 text-sm text-slate-200">
-        Replay speed
+      <label className="ml-auto flex items-center gap-2 text-sm text-emerald-100/80">
+        <span className="font-medium">Speed</span>
         <select
           value={replaySpeed}
           onChange={(event) => onReplaySpeedChange(Number(event.target.value))}
           disabled={!hasMatch}
-          className="rounded-md border border-slate-600 bg-slate-900 px-2 py-1 text-sm outline-none focus:border-accent disabled:opacity-60"
+          className="rounded-md border border-emerald-500/30 bg-stadium px-2.5 py-1.5 text-sm font-medium text-emerald-100 outline-none focus:border-emerald-400 disabled:opacity-50"
         >
           {SPEED_OPTIONS.map((option) => (
             <option key={option.value} value={option.value}>

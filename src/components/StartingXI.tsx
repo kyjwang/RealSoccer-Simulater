@@ -6,15 +6,24 @@ type StartingXIProps = {
 };
 
 const PlayerList = ({ team }: { team: Team }): JSX.Element => (
-  <div className="rounded border border-slate-700 bg-slate-950 p-3">
-    <div className="mb-2 flex items-center gap-2">
-      <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: team.color }} />
-      <p className="text-sm font-semibold text-slate-100">{team.shortName} Starting XI</p>
+  <div className="rounded-lg border border-emerald-500/20 bg-panel/80 p-3 shadow-panel">
+    <div className="mb-2.5 flex items-center gap-2.5">
+      <div
+        className="flex h-7 w-7 items-center justify-center rounded-md text-xs font-bold text-white"
+        style={{ backgroundColor: team.color }}
+      >
+        {team.shortName.slice(0, 2)}
+      </div>
+      <p className="font-body text-sm font-semibold text-netWhite">{team.shortName} Starting XI</p>
     </div>
-    <div className="grid grid-cols-1 gap-1 text-xs text-slate-300 sm:grid-cols-2">
+    <div className="grid grid-cols-1 gap-1 text-xs text-emerald-100/70 sm:grid-cols-2">
       {team.players.slice(0, 11).map((player) => (
         <p key={player.id} className="truncate">
-          {player.number ?? "-"} · {player.name} · {player.position}
+          <span className="font-semibold text-emerald-200">{player.number ?? "-"}</span>
+          {" · "}
+          {player.name}
+          {" · "}
+          <span className="text-emerald-100/50">{player.position}</span>
         </p>
       ))}
     </div>

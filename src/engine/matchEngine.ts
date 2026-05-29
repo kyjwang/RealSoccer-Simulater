@@ -59,7 +59,9 @@ const toRuntimeTeam = (team: Team, side: Side): RuntimeTeam => ({
     base: player,
     x: player.x,
     y: player.y,
-    stamina: player.stamina
+    stamina: player.stamina,
+    velocityX: 0,
+    velocityY: 0
   }))
 });
 
@@ -133,18 +135,55 @@ const reduceStamina = (team: RuntimeTeam, random: () => number): void => {
   }
 };
 
-const moveTowards = (player: RuntimePlayer, targetX: number, targetY: number, maxStep: number): void => {
-  const dx = targetX - player.x;
-  const dy = targetY - player.y;
-  const dist = Math.hypot(dx, dy);
+const roleBandY = (player: RuntimePlayer): number => {
+  switch (player.base.position) {
+    case "GK":
+      return 50;
+    case "DF":
+      return 26 + (player.base.y / 100) * 48;
+    case "MF":
+      return 20 + (player.base.y / 100) * 60;
+    case "FW":
+      return 16 + (player.base.y / 100) * 68;
+    default:
+      return player.base.y;
+  }
+};
 
-  if (dist <= 0.001) {
-    return;
+/**
+ * Applies inertial steering so players accelerate/decelerate rather than snapping.
+ */
+const steerPlayer = (params: {
+  player: RuntimePlayer;
+  targetX: number;
+  targetY: number;
+  maxSpeed: number;
+  acceleration: number;
+  damping: number;
+}): void => {
+  const dx = params.targetX - params.player.x;
+  const dy = params.targetY - params.player.y;
+  const distanceToTarget = Math.hypot(dx, dy);
+  const safeDistance = Math.max(distanceToTarget, 0.0001);
+
+  const desiredSpeed = Math.min(params.maxSpeed, distanceToTarget * 0.42 + 0.18);
+  const desiredVelocityX = (dx / safeDistance) * desiredSpeed;
+  const desiredVelocityY = (dy / safeDistance) * desiredSpeed;
+
+  params.player.velocityX =
+    params.player.velocityX * params.damping + (desiredVelocityX - params.player.velocityX) * params.acceleration;
+  params.player.velocityY =
+    params.player.velocityY * params.damping + (desiredVelocityY - params.player.velocityY) * params.acceleration;
+
+  const velocityMagnitude = Math.hypot(params.player.velocityX, params.player.velocityY);
+  if (velocityMagnitude > params.maxSpeed) {
+    const scale = params.maxSpeed / velocityMagnitude;
+    params.player.velocityX *= scale;
+    params.player.velocityY *= scale;
   }
 
-  const step = Math.min(maxStep, dist);
-  player.x += (dx / dist) * step;
-  player.y += (dy / dist) * step;
+  params.player.x += params.player.velocityX;
+  params.player.y += params.player.velocityY;
 };
 
 const updateTeamShape = (params: {
@@ -152,6 +191,7 @@ const updateTeamShape = (params: {
   hasPossession: boolean;
   ball: { x: number; y: number; carrierPlayerId?: string };
   homeTeamId: string;
+  transitionIntensity: number;
   random: () => number;
 }): void => {
   const direction = params.team.team.id === params.homeTeamId ? 1 : -1;
@@ -162,26 +202,35 @@ const updateTeamShape = (params: {
     }
 
     const baseX = player.base.x;
-    const baseY = player.base.y;
-
+    const compactLineY = roleBandY(player);
+    const shapeTension = clamp(params.team.team.pressing * 0.7 + params.team.team.tempo * 0.3, 0.45, 1.25);
+    const transitionPush = params.transitionIntensity * (params.hasPossession ? 1.35 : -1.15);
     const tacticalShiftX =
       direction *
       (params.hasPossession
-        ? 6 + params.team.team.attackBias * 8
-        : -4 - (1 - params.team.team.defensiveLine) * 6);
+        ? 5 + params.team.team.attackBias * 9 + transitionPush * 3.8
+        : -5 - (1 - params.team.team.defensiveLine) * 8 + transitionPush * 2.4);
 
-    const ballPullX = (params.ball.x - 50) * (params.hasPossession ? 0.07 : 0.04);
-    const ballPullY = (params.ball.y - baseY) * (params.hasPossession ? 0.11 : 0.08);
+    const ballPullX = (params.ball.x - 50) * (params.hasPossession ? 0.09 : 0.055) * shapeTension;
+    const laneRecoveryY = (compactLineY - player.y) * 0.55;
+    const ballPullY = (params.ball.y - compactLineY) * (params.hasPossession ? 0.14 : 0.1);
+    const widthElasticity = (player.base.y - 50) * (params.hasPossession ? 0.05 : 0.03);
 
     const keeperFactor = player.base.position === "GK" ? 0.25 : 1;
 
     const targetX = clamp(baseX + tacticalShiftX * keeperFactor + ballPullX * keeperFactor, 2, 98);
-    const targetY = clamp(baseY + ballPullY, 4, 96);
+    const targetY = clamp(player.y + laneRecoveryY + ballPullY - widthElasticity, 4, 96);
 
     const pace = effectiveAttribute(player.base, "speed", player.stamina);
-    const maxStep = (0.38 + pace * 1.4) * randomBetween(0.9, 1.08, params.random);
-
-    moveTowards(player, targetX, targetY, maxStep);
+    const maxSpeed = (0.2 + pace * 1.15) * randomBetween(0.94, 1.08, params.random);
+    steerPlayer({
+      player,
+      targetX,
+      targetY,
+      maxSpeed,
+      acceleration: 0.24,
+      damping: 0.78
+    });
   }
 };
 
@@ -191,6 +240,7 @@ const applyOpenPlayMovement = (params: {
   possessionTeamId: string;
   ball: { x: number; y: number; carrierPlayerId?: string };
   homeTeamId: string;
+  transitionIntensity: number;
   random: () => number;
 }): void => {
   updateTeamShape({
@@ -198,6 +248,7 @@ const applyOpenPlayMovement = (params: {
     hasPossession: params.possessionTeamId === params.home.team.id,
     ball: params.ball,
     homeTeamId: params.homeTeamId,
+    transitionIntensity: params.transitionIntensity,
     random: params.random
   });
 
@@ -206,6 +257,7 @@ const applyOpenPlayMovement = (params: {
     hasPossession: params.possessionTeamId === params.away.team.id,
     ball: params.ball,
     homeTeamId: params.homeTeamId,
+    transitionIntensity: params.transitionIntensity,
     random: params.random
   });
 };
@@ -213,12 +265,16 @@ const applyOpenPlayMovement = (params: {
 const clampOnPitch = (player: RuntimePlayer): void => {
   player.x = clamp(player.x, 2, 98);
   player.y = clamp(player.y, 2, 98);
+  player.velocityX = clamp(player.velocityX, -3.2, 3.2);
+  player.velocityY = clamp(player.velocityY, -3.2, 3.2);
 };
 
 const placeForKickoff = (home: RuntimeTeam, away: RuntimeTeam): void => {
   for (const player of [...home.players, ...away.players]) {
     player.x = player.base.x;
     player.y = player.base.y;
+    player.velocityX = 0;
+    player.velocityY = 0;
     clampOnPitch(player);
   }
 };
@@ -270,6 +326,7 @@ export const simulateMatch = (
   let possessionTeamId = random() > 0.5 ? home.team.id : away.team.id;
   let possessionTeam = findTeamById(runtimeTeams, possessionTeamId);
   let carrier = pickKickoffCarrier(possessionTeam);
+  let transitionIntensity = 0;
 
   carrier.x = 50;
   carrier.y = 50;
@@ -307,6 +364,8 @@ export const simulateMatch = (
     const elapsedSeconds = tick * secondsPerTick;
     const minute = Math.max(1, Math.ceil(elapsedSeconds / 60));
     const second = elapsedSeconds % 60;
+    const possessionAtTickStart = possessionTeamId;
+    transitionIntensity = Math.max(0, transitionIntensity - 0.12);
 
     reduceStamina(home, random);
     reduceStamina(away, random);
@@ -317,6 +376,7 @@ export const simulateMatch = (
       possessionTeamId,
       ball,
       homeTeamId: home.team.id,
+      transitionIntensity,
       random
     });
 
@@ -336,7 +396,14 @@ export const simulateMatch = (
       ball.carrierPlayerId = carrier.base.id;
     }
 
-    moveTowards(carrier, ball.x, ball.y, 1.8);
+    steerPlayer({
+      player: carrier,
+      targetX: ball.x,
+      targetY: ball.y,
+      maxSpeed: 2.2,
+      acceleration: 0.35,
+      damping: 0.65
+    });
 
     const attackingStats = getStatBlock(possessionTeam.team.id);
     const defendingStats = getOppositionStatBlock(possessionTeam.team.id);
@@ -388,8 +455,14 @@ export const simulateMatch = (
       if (success) {
         attackingStats.passesCompleted += 1;
 
-        const landingX = clamp(target.x + randomBetween(-1, 1, random), 2, 98);
-        const landingY = clamp(target.y + randomBetween(-1, 1, random), 2, 98);
+        const leadDistance = 1.1 + Math.hypot(target.velocityX, target.velocityY) * 1.7;
+        const passingDirection = possessionTeam.team.id === home.team.id ? 1 : -1;
+        const landingY = clamp(target.y + target.velocityY * 0.75 + randomBetween(-0.8, 0.8, random), 2, 98);
+        const landingX = clamp(
+          target.x + target.velocityX * 0.7 + passingDirection * leadDistance + randomBetween(-0.9, 0.9, random),
+          2,
+          98
+        );
 
         frameEvents.push(
           createMatchEvent({
@@ -413,6 +486,8 @@ export const simulateMatch = (
         ball.y = landingY;
         target.x = landingX;
         target.y = landingY;
+        target.velocityX *= 0.8;
+        target.velocityY *= 0.8;
         ball.carrierPlayerId = target.base.id;
         ball.teamId = possessionTeam.team.id;
 
@@ -494,7 +569,14 @@ export const simulateMatch = (
         const targetX = clamp(carrier.x + stride * direction, 2, 98);
         const targetY = clamp(carrier.y + randomBetween(-4, 4, random), 4, 96);
 
-        moveTowards(carrier, targetX, targetY, stride);
+        steerPlayer({
+          player: carrier,
+          targetX,
+          targetY,
+          maxSpeed: stride,
+          acceleration: 0.4,
+          damping: 0.7
+        });
 
         ball.x = carrier.x;
         ball.y = carrier.y;
@@ -903,6 +985,10 @@ export const simulateMatch = (
 
     for (const event of frameEvents) {
       events.push(event);
+    }
+
+    if (possessionTeamId !== possessionAtTickStart) {
+      transitionIntensity = 1;
     }
 
     if (tick === totalTicks / 2) {

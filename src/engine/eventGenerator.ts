@@ -10,6 +10,8 @@ export type RuntimePlayer = {
   x: number;
   y: number;
   stamina: number;
+  velocityX: number;
+  velocityY: number;
 };
 
 export const createMatchEvent = (params: {

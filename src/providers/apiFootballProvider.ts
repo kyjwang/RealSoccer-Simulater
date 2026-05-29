@@ -434,12 +434,15 @@ export class ApiFootballProvider implements FootballDataProvider {
     try {
       const stats = await this.getPlayerStats(params);
       const statsByExternalId = new Map(stats.data.map((playerStats) => [playerStats.externalId, playerStats]));
-      ratings = buildRatingsFromStats(
-        rawSquad.map((player) => ({
-          ...player,
-          ...(statsByExternalId.get(player.externalId) ?? {})
-        }))
-      );
+      const enrichedSquad = rawSquad.map((player) => {
+        const playerStats = statsByExternalId.get(player.externalId);
+        // Only merge stats if the player actually has meaningful data (minutes > 0)
+        if (playerStats && (playerStats.minutes ?? 0) > 0) {
+          return { ...player, ...playerStats };
+        }
+        return player;
+      });
+      ratings = buildRatingsFromStats(enrichedSquad);
     } catch {
       // The squad endpoint is enough for fallback ratings; detailed stats improve them when quota allows.
     }

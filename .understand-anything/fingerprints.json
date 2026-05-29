@@ -1,0 +1,3313 @@
+{
+  "version": "1.0.0",
+  "gitCommitHash": "74927c5e9c4b68d82b022f3cc38d5093758fec82",
+  "generatedAt": "2026-05-27T11:17:37.014Z",
+  "files": {
+    ".env": {
+      "filePath": ".env",
+      "contentHash": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 2,
+      "hasStructuralAnalysis": true
+    },
+    ".env.local": {
+      "filePath": ".env.local",
+      "contentHash": "d5442642ac2c1852782c9dc3793b046e478233f32c40df63a995218e984d1830",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 1,
+      "hasStructuralAnalysis": true
+    },
+    ".understand-anything/.understandignore": {
+      "filePath": ".understand-anything/.understandignore",
+      "contentHash": "6a1103e665ff8cbb3fe9b9191581f4461fd6d0fa0293c2aa78f5af38151cd9be",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 18,
+      "hasStructuralAnalysis": false
+    },
+    "next-env.d.ts": {
+      "filePath": "next-env.d.ts",
+      "contentHash": "9269d492817e359123ac64c8205e5d05dab63d71a3a7a229e68b5d9a0e8150bf",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 6,
+      "hasStructuralAnalysis": true
+    },
+    "next.config.js": {
+      "filePath": "next.config.js",
+      "contentHash": "ea91b4da7798ba5d5490a02c73764b4db874161f2d12c423cc6420c5a494a6ac",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 7,
+      "hasStructuralAnalysis": true
+    },
+    "package.json": {
+      "filePath": "package.json",
+      "contentHash": "fd8a3292452543ee50e660c45ba29340e05b4e8b36bf3545f71a4e35c6a7e1d0",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 31,
+      "hasStructuralAnalysis": true
+    },
+    "postcss.config.js": {
+      "filePath": "postcss.config.js",
+      "contentHash": "c3275e0c1ab2639ab056915eac2a806b997a7879c31edce8898ec443a4823a06",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 7,
+      "hasStructuralAnalysis": true
+    },
+    "README.md": {
+      "filePath": "README.md",
+      "contentHash": "b1e1fdf835e0fd1dd82c8087ea408f2e4655bf8c8989c1745ee55a7e3a616d76",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 232,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/football-data/route.ts": {
+      "filePath": "src/app/api/football-data/route.ts",
+      "contentHash": "e60d721fe06b8e7cb70b25ddd630af2b0207d1e5095617dd51ac9eac448c6916",
+      "functions": [
+        {
+          "name": "apiOrFallback",
+          "params": [
+            "operation",
+            "fallback"
+          ],
+          "returnType": "Promise<T>",
+          "exported": false,
+          "lineCount": 20
+        },
+        {
+          "name": "GET",
+          "params": [
+            "request"
+          ],
+          "returnType": "Promise<NextResponse>",
+          "exported": true,
+          "lineCount": 123
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextRequest",
+            "NextResponse"
+          ]
+        },
+        {
+          "source": "@/providers/apiFootballProvider",
+          "specifiers": [
+            "apiFootballProvider"
+          ]
+        },
+        {
+          "source": "@/providers/fallback/localDemoProvider",
+          "specifiers": [
+            "localDemoProvider"
+          ]
+        }
+      ],
+      "exports": [
+        "dynamic",
+        "GET"
+      ],
+      "totalLines": 152,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/football/fixtures/route.ts": {
+      "filePath": "src/app/api/football/fixtures/route.ts",
+      "contentHash": "a4553268fbbdcea22b9aaa931563c84957ad8113299a970bf6591f04ad3e1971",
+      "functions": [
+        {
+          "name": "GET",
+          "params": [
+            "request"
+          ],
+          "exported": true,
+          "lineCount": 14
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextRequest"
+          ]
+        },
+        {
+          "source": "@/app/api/football/routeUtils",
+          "specifiers": [
+            "getFootballParams",
+            "withApiFootballFallback"
+          ]
+        },
+        {
+          "source": "@/providers/apiFootballProvider",
+          "specifiers": [
+            "apiFootballProvider"
+          ]
+        },
+        {
+          "source": "@/providers/fallback/localDemoProvider",
+          "specifiers": [
+            "localDemoProvider"
+          ]
+        }
+      ],
+      "exports": [
+        "dynamic",
+        "GET"
+      ],
+      "totalLines": 23,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/football/routeUtils.ts": {
+      "filePath": "src/app/api/football/routeUtils.ts",
+      "contentHash": "4f7a031dc1bd1ccad24673c95963d0d28504691cf8df4445b335d354e8268280",
+      "functions": [
+        {
+          "name": "getFootballParams",
+          "params": [
+            "request"
+          ],
+          "exported": true,
+          "lineCount": 11
+        },
+        {
+          "name": "withApiFootballFallback",
+          "params": [
+            "operation",
+            "fallback"
+          ],
+          "returnType": "Promise<NextResponse>",
+          "exported": true,
+          "lineCount": 33
+        },
+        {
+          "name": "demoStatusResponse",
+          "params": [],
+          "returnType": "Promise<NextResponse>",
+          "exported": true,
+          "lineCount": 5
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextRequest",
+            "NextResponse"
+          ]
+        },
+        {
+          "source": "@/config/football",
+          "specifiers": [
+            "DEFAULT_FOOTBALL_CONFIG"
+          ]
+        },
+        {
+          "source": "@/providers/apiFootballErrors",
+          "specifiers": [
+            "ApiFootballHttpError"
+          ]
+        },
+        {
+          "source": "@/providers/apiFootballProvider",
+          "specifiers": [
+            "apiFootballProvider"
+          ]
+        },
+        {
+          "source": "@/providers/fallback/localDemoProvider",
+          "specifiers": [
+            "localDemoProvider"
+          ]
+        },
+        {
+          "source": "@/types/dataProvider",
+          "specifiers": [
+            "ProviderResponse"
+          ]
+        }
+      ],
+      "exports": [
+        "getFootballParams",
+        "withApiFootballFallback",
+        "demoStatusResponse"
+      ],
+      "totalLines": 63,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/football/squad/route.ts": {
+      "filePath": "src/app/api/football/squad/route.ts",
+      "contentHash": "3948862e66364ee71f3e0df7243f1c9d91a8ca5a5ccfbf317577944ff59c70ab",
+      "functions": [
+        {
+          "name": "GET",
+          "params": [
+            "request"
+          ],
+          "exported": true,
+          "lineCount": 12
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextRequest",
+            "NextResponse"
+          ]
+        },
+        {
+          "source": "@/app/api/football/routeUtils",
+          "specifiers": [
+            "getFootballParams",
+            "withApiFootballFallback"
+          ]
+        },
+        {
+          "source": "@/providers/apiFootballProvider",
+          "specifiers": [
+            "apiFootballProvider"
+          ]
+        },
+        {
+          "source": "@/providers/fallback/localDemoProvider",
+          "specifiers": [
+            "localDemoProvider"
+          ]
+        }
+      ],
+      "exports": [
+        "dynamic",
+        "GET"
+      ],
+      "totalLines": 21,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/football/status/route.ts": {
+      "filePath": "src/app/api/football/status/route.ts",
+      "contentHash": "1db2e9578fb5b55a4b9e9b3033f8cb031c859724242163e61d45638d04693e05",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/app/api/football/routeUtils",
+          "specifiers": [
+            "demoStatusResponse"
+          ]
+        }
+      ],
+      "exports": [
+        "dynamic",
+        "GET"
+      ],
+      "totalLines": 6,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/football/team-stats/route.ts": {
+      "filePath": "src/app/api/football/team-stats/route.ts",
+      "contentHash": "1a11adc4bfd7197848e6a2b374ec381bbb09a1d7ca7abf7c902b3cd4b197ef9e",
+      "functions": [
+        {
+          "name": "GET",
+          "params": [
+            "request"
+          ],
+          "exported": true,
+          "lineCount": 12
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextRequest",
+            "NextResponse"
+          ]
+        },
+        {
+          "source": "@/app/api/football/routeUtils",
+          "specifiers": [
+            "getFootballParams",
+            "withApiFootballFallback"
+          ]
+        },
+        {
+          "source": "@/providers/apiFootballProvider",
+          "specifiers": [
+            "apiFootballProvider"
+          ]
+        },
+        {
+          "source": "@/providers/fallback/localDemoProvider",
+          "specifiers": [
+            "localDemoProvider"
+          ]
+        }
+      ],
+      "exports": [
+        "dynamic",
+        "GET"
+      ],
+      "totalLines": 21,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/football/teams/route.ts": {
+      "filePath": "src/app/api/football/teams/route.ts",
+      "contentHash": "cfa9a7a7bc29595cff7e349ecca5feea29893424567da0d9f5e5159d2afc7923",
+      "functions": [
+        {
+          "name": "GET",
+          "params": [
+            "request"
+          ],
+          "exported": true,
+          "lineCount": 8
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextRequest"
+          ]
+        },
+        {
+          "source": "@/app/api/football/routeUtils",
+          "specifiers": [
+            "getFootballParams",
+            "withApiFootballFallback"
+          ]
+        },
+        {
+          "source": "@/providers/apiFootballProvider",
+          "specifiers": [
+            "apiFootballProvider"
+          ]
+        },
+        {
+          "source": "@/providers/fallback/localDemoProvider",
+          "specifiers": [
+            "localDemoProvider"
+          ]
+        }
+      ],
+      "exports": [
+        "dynamic",
+        "GET"
+      ],
+      "totalLines": 17,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/statsbomb/competitions/route.ts": {
+      "filePath": "src/app/api/statsbomb/competitions/route.ts",
+      "contentHash": "41b0db56da2d8b84692f279eb3d93b657a5347eca58b22bad28fea8eddac3d0b",
+      "functions": [
+        {
+          "name": "GET",
+          "params": [],
+          "exported": true,
+          "lineCount": 3
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextResponse"
+          ]
+        },
+        {
+          "source": "@/providers/statsBombOpenDataProvider",
+          "specifiers": [
+            "getStatsBombCompetitions"
+          ]
+        }
+      ],
+      "exports": [
+        "dynamic",
+        "GET"
+      ],
+      "totalLines": 10,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/statsbomb/match/route.ts": {
+      "filePath": "src/app/api/statsbomb/match/route.ts",
+      "contentHash": "ad9ccca27c7080fc5da584d8f121f1c8e39de45bfcbbfbdc36b491d39beb191f",
+      "functions": [
+        {
+          "name": "GET",
+          "params": [
+            "request"
+          ],
+          "exported": true,
+          "lineCount": 9
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextRequest",
+            "NextResponse"
+          ]
+        },
+        {
+          "source": "@/providers/statsBombOpenDataProvider",
+          "specifiers": [
+            "statsBombOpenDataProvider"
+          ]
+        }
+      ],
+      "exports": [
+        "dynamic",
+        "GET"
+      ],
+      "totalLines": 16,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/api/statsbomb/matches/route.ts": {
+      "filePath": "src/app/api/statsbomb/matches/route.ts",
+      "contentHash": "065454af8c582ae30884292804a9f98591a5617f432e6c22f3105627cd011ecb",
+      "functions": [
+        {
+          "name": "GET",
+          "params": [
+            "request"
+          ],
+          "exported": true,
+          "lineCount": 10
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/server",
+          "specifiers": [
+            "NextRequest",
+            "NextResponse"
+          ]
+        },
+        {
+          "source": "@/providers/statsBombOpenDataProvider",
+          "specifiers": [
+            "getStatsBombMatches"
+          ]
+        }
+      ],
+      "exports": [
+        "dynamic",
+        "GET"
+      ],
+      "totalLines": 17,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/globals.css": {
+      "filePath": "src/app/globals.css",
+      "contentHash": "f2d32eeb5c967c7f81d6d2ca6327552f6cfc1b080e72caec75be086e4da369ca",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 62,
+      "hasStructuralAnalysis": false
+    },
+    "src/app/layout.tsx": {
+      "filePath": "src/app/layout.tsx",
+      "contentHash": "cf5e5937bbbb0690be0d2bcb25ee18c0a8f2ad64d04d73402bf5c8e2aba627f5",
+      "functions": [
+        {
+          "name": "RootLayout",
+          "params": [
+            "{ children }"
+          ],
+          "returnType": "JSX.Element",
+          "exported": true,
+          "lineCount": 12
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next",
+          "specifiers": [
+            "Metadata"
+          ]
+        },
+        {
+          "source": "@/app/globals.css",
+          "specifiers": []
+        }
+      ],
+      "exports": [
+        "metadata",
+        "RootLayout"
+      ],
+      "totalLines": 22,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/page.tsx": {
+      "filePath": "src/app/page.tsx",
+      "contentHash": "13c00e8f8533e62b9adbeb046bd5db81e6337c6f1810f3183b5bdb6df85f35f7",
+      "functions": [
+        {
+          "name": "HomePage",
+          "params": [],
+          "returnType": "never",
+          "exported": true,
+          "lineCount": 3
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "next/navigation",
+          "specifiers": [
+            "redirect"
+          ]
+        }
+      ],
+      "exports": [
+        "HomePage"
+      ],
+      "totalLines": 6,
+      "hasStructuralAnalysis": true
+    },
+    "src/app/simulator/page.tsx": {
+      "filePath": "src/app/simulator/page.tsx",
+      "contentHash": "de534771f0133e3fb8f109bae14ef97c74081100b453c7d255ea9614739a9030",
+      "functions": [
+        {
+          "name": "emptyStats",
+          "params": [],
+          "returnType": "MatchStats",
+          "exported": false,
+          "lineCount": 28
+        },
+        {
+          "name": "makePreviewFrame",
+          "params": [
+            "home",
+            "away"
+          ],
+          "returnType": "MatchFrame",
+          "exported": false,
+          "lineCount": 23
+        },
+        {
+          "name": "dataQualityFor",
+          "params": [
+            "apiStatus"
+          ],
+          "returnType": "DataQuality",
+          "exported": false,
+          "lineCount": 20
+        },
+        {
+          "name": "hydrateTeamWithSquad",
+          "params": [
+            "team",
+            "options"
+          ],
+          "returnType": "Promise<Team>",
+          "exported": false,
+          "lineCount": 23
+        },
+        {
+          "name": "SimulatorPage",
+          "params": [],
+          "returnType": "JSX.Element",
+          "exported": true,
+          "lineCount": 566
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "useCallback",
+            "useEffect",
+            "useMemo",
+            "useRef",
+            "useState"
+          ]
+        },
+        {
+          "source": "@/components/DataSourceStatus",
+          "specifiers": [
+            "DataSourceStatus"
+          ]
+        },
+        {
+          "source": "@/components/MatchControls",
+          "specifiers": [
+            "MatchControls"
+          ]
+        },
+        {
+          "source": "@/components/MatchStatsPanel",
+          "specifiers": [
+            "MatchStatsPanel"
+          ]
+        },
+        {
+          "source": "@/components/MatchTimeline",
+          "specifiers": [
+            "MatchTimeline"
+          ]
+        },
+        {
+          "source": "@/components/ModeSelector",
+          "specifiers": [
+            "ModeSelector",
+            "SimulatorMode"
+          ]
+        },
+        {
+          "source": "@/components/Pitch2D",
+          "specifiers": [
+            "Pitch2D"
+          ]
+        },
+        {
+          "source": "@/components/PredictionResultsPanel",
+          "specifiers": [
+            "PredictionResultsPanel"
+          ]
+        },
+        {
+          "source": "@/components/Scoreboard",
+          "specifiers": [
+            "Scoreboard"
+          ]
+        },
+        {
+          "source": "@/components/StartingXI",
+          "specifiers": [
+            "StartingXI"
+          ]
+        },
+        {
+          "source": "@/components/TeamSelector",
+          "specifiers": [
+            "TeamSelector"
+          ]
+        },
+        {
+          "source": "@/config/football",
+          "specifiers": [
+            "DEFAULT_FOOTBALL_CONFIG",
+            "SUPPORTED_LEAGUES",
+            "SUPPORTED_SEASONS"
+          ]
+        },
+        {
+          "source": "@/data/teams",
+          "specifiers": [
+            "localTeams"
+          ]
+        },
+        {
+          "source": "@/engine/matchEngine",
+          "specifiers": [
+            "simulateMatch"
+          ]
+        },
+        {
+          "source": "@/engine/prediction/monteCarlo",
+          "specifiers": [
+            "runMonteCarloPrediction"
+          ]
+        },
+        {
+          "source": "@/engine/replayEngine",
+          "specifiers": [
+            "buildReplayMatch"
+          ]
+        },
+        {
+          "source": "@/engine/startingXi",
+          "specifiers": [
+            "buildStartingXI"
+          ]
+        },
+        {
+          "source": "@/types/dataProvider",
+          "specifiers": [
+            "FixtureSummary",
+            "HistoricalCompetition",
+            "HistoricalMatch",
+            "ProviderStatus"
+          ]
+        },
+        {
+          "source": "@/types/match",
+          "specifiers": [
+            "DataQuality",
+            "MatchFrame",
+            "MatchStats",
+            "MatchSummary",
+            "PredictionResult"
+          ]
+        },
+        {
+          "source": "@/types/team",
+          "specifiers": [
+            "Team"
+          ]
+        }
+      ],
+      "exports": [
+        "SimulatorPage"
+      ],
+      "totalLines": 699,
+      "hasStructuralAnalysis": true
+    },
+    "src/components/DataSourceStatus.tsx": {
+      "filePath": "src/components/DataSourceStatus.tsx",
+      "contentHash": "8399585041f73c29d1bf5e806e51b2db43d7c762f684d14df44df0e32808d5db",
+      "functions": [
+        {
+          "name": "stateTone",
+          "params": [
+            "state"
+          ],
+          "returnType": "string",
+          "exported": false,
+          "lineCount": 16
+        },
+        {
+          "name": "StatusLine",
+          "params": [
+            "{ status }"
+          ],
+          "returnType": "JSX.Element",
+          "exported": false,
+          "lineCount": 9
+        },
+        {
+          "name": "DataSourceStatus",
+          "params": [
+            "{\n  apiFootball,\n  statsBomb,\n  onRefresh,\n  isRefreshing\n}"
+          ],
+          "returnType": "JSX.Element",
+          "exported": true,
+          "lineCount": 21
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/types/dataProvider",
+          "specifiers": [
+            "ProviderStatus"
+          ]
+        }
+      ],
+      "exports": [
+        "DataSourceStatus"
+      ],
+      "totalLines": 58,
+      "hasStructuralAnalysis": true
+    },
+    "src/components/MatchControls.tsx": {
+      "filePath": "src/components/MatchControls.tsx",
+      "contentHash": "22ddce188f9449a7371ffa80a8ed2c5737c221822f4de182aa2e8da900286d55",
+      "functions": [
+        {
+          "name": "MatchControls",
+          "params": [
+            "{\n  onSimulate,\n  primaryLabel = \"Simulate Match\",\n  simDisabled,\n  hasMatch,\n  isPlaying,\n  onTogglePlay,\n  onRestartReplay,\n  replaySpeed,\n  onReplaySpeedChange\n}"
+          ],
+          "returnType": "JSX.Element",
+          "exported": true,
+          "lineCount": 58
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "MatchControls"
+      ],
+      "totalLines": 77,
+      "hasStructuralAnalysis": true
+    },
+    "src/components/MatchStatsPanel.tsx": {
+      "filePath": "src/components/MatchStatsPanel.tsx",
+      "contentHash": "08c1d0b42beba63e4228ed65050a70bbf8b177005e806a8228e4f9c0cc2e78be",
+      "functions": [
+        {
+          "name": "pct",
+          "params": [
+            "value"
+          ],
+          "returnType": "string",
+          "exported": false,
+          "lineCount": 1
+        },
+        {
+          "name": "fixed",
+          "params": [
+            "value"
+          ],
+          "returnType": "string",
+          "exported": false,
+          "lineCount": 1
+        },
+        {
+          "name": "MatchStatsPanel",
+          "params": [
+            "{\n  homeTeam,\n  awayTeam,\n  stats,\n  mvpName,\n  isFinal\n}"
+          ],
+          "returnType": "JSX.Element",
+          "exported": true,
+          "lineCount": 85
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/types/match",
+          "specifiers": [
+            "MatchStats"
+          ]
+        },
+        {
+          "source": "@/types/team",
+          "specifiers": [
+            "Team"
+          ]
+        }
+      ],
+      "exports": [
+        "MatchStatsPanel"
+      ],
+      "totalLines": 106,
+      "hasStructuralAnalysis": true
+    },
+    "src/components/MatchTimeline.tsx": {
+      "filePath": "src/components/MatchTimeline.tsx",
+      "contentHash": "e48a5d3e43e22cf5fd87dcf2f290b6485cd6c37a76f6072e38e40e7741c41e2c",
+      "functions": [
+        {
+          "name": "eventTone",
+          "params": [
+            "type"
+          ],
+          "returnType": "string",
+          "exported": false,
+          "lineCount": 17
+        },
+        {
+          "name": "eventIcon",
+          "params": [
+            "type"
+          ],
+          "returnType": "string",
+          "exported": false,
+          "lineCount": 20
+        },
+        {
+          "name": "MatchTimeline",
+          "params": [
+            "{ events, teams, currentTick }"
+          ],
+          "returnType": "JSX.Element",
+          "exported": true,
+          "lineCount": 46
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "useEffect",
+            "useMemo",
+            "useRef"
+          ]
+        },
+        {
+          "source": "@/types/event",
+          "specifiers": [
+            "MatchEvent"
+          ]
+        },
+        {
+          "source": "@/types/team",
+          "specifiers": [
+            "Team"
+          ]
+        }
+      ],
+      "exports": [
+        "MatchTimeline"
+      ],
+      "totalLines": 99,
+      "hasStructuralAnalysis": true
+    },
+    "src/components/ModeSelector.tsx": {
+      "filePath": "src/components/ModeSelector.tsx",
+      "contentHash": "0a4bddd8fece7da459c0ed1117494b69530564d855e2d798b85d8c550db1daea",
+      "functions": [
+        {
+          "name": "ModeSelector",
+          "params": [
+            "{ value, onChange }"
+          ],
+          "returnType": "JSX.Element",
+          "exported": true,
+          "lineCount": 21
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "ModeSelector"
+      ],
+      "totalLines": 35,
+      "hasStructuralAnalysis": true
+    },
+    "src/components/Pitch2D.tsx": {
+      "filePath": "src/components/Pitch2D.tsx",
+      "contentHash": "e53ccc730a2271b259438e63ffeccc46ee1ac9969c23023212226fdc9e38d05c",
+      "functions": [
+        {
+          "name": "mapX",
+          "params": [
+            "x"
+          ],
+          "returnType": "number",
+          "exported": false,
+          "lineCount": 1
+        },
+        {
+          "name": "mapY",
+          "params": [
+            "y"
+          ],
+          "returnType": "number",
+          "exported": false,
+          "lineCount": 1
+        },
+        {
+          "name": "easeInOutCubic",
+          "params": [
+            "t"
+          ],
+          "returnType": "number",
+          "exported": false,
+          "lineCount": 1
+        },
+        {
+          "name": "drawPitch",
+          "params": [
+            "ctx"
+          ],
+          "returnType": "void",
+          "exported": false,
+          "lineCount": 145
+        },
+        {
+          "name": "playerPosition",
+          "params": [
+            "params"
+          ],
+          "returnType": "{ x: number; y: number }",
+          "exported": false,
+          "lineCount": 8
+        },
+        {
+          "name": "drawPlayers",
+          "params": [
+            "params"
+          ],
+          "returnType": "void",
+          "exported": false,
+          "lineCount": 47
+        },
+        {
+          "name": "interpolateBall",
+          "params": [
+            "params"
+          ],
+          "returnType": "{ x: number; y: number }",
+          "exported": false,
+          "lineCount": 33
+        },
+        {
+          "name": "drawBall",
+          "params": [
+            "params"
+          ],
+          "returnType": "void",
+          "exported": false,
+          "lineCount": 33
+        },
+        {
+          "name": "drawEventTrail",
+          "params": [
+            "params"
+          ],
+          "returnType": "void",
+          "exported": false,
+          "lineCount": 35
+        },
+        {
+          "name": "drawLabels",
+          "params": [
+            "params"
+          ],
+          "returnType": "void",
+          "exported": false,
+          "lineCount": 64
+        },
+        {
+          "name": "Pitch2D",
+          "params": [
+            "{\n  frame,\n  nextFrame,\n  interpolationT,\n  homeTeam,\n  awayTeam,\n  playerMeta,\n  currentEvent\n}"
+          ],
+          "returnType": "JSX.Element",
+          "exported": true,
+          "lineCount": 44
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "react",
+          "specifiers": [
+            "useEffect",
+            "useRef"
+          ]
+        },
+        {
+          "source": "@/engine/probability",
+          "specifiers": [
+            "clamp",
+            "lerp"
+          ]
+        },
+        {
+          "source": "@/types/event",
+          "specifiers": [
+            "MatchEvent"
+          ]
+        },
+        {
+          "source": "@/types/match",
+          "specifiers": [
+            "MatchFrame"
+          ]
+        },
+        {
+          "source": "@/types/team",
+          "specifiers": [
+            "Team"
+          ]
+        }
+      ],
+      "exports": [
+        "Pitch2D"
+      ],
+      "totalLines": 445,
+      "hasStructuralAnalysis": true
+    },
+    "src/components/PredictionResultsPanel.tsx": {
+      "filePath": "src/components/PredictionResultsPanel.tsx",
+      "contentHash": "09a883499a3be8d050cbbc7a265ab938a60492f2660f12a18145db9cf53df715",
+      "functions": [
+        {
+          "name": "fixed",
+          "params": [
+            "value"
+          ],
+          "returnType": "string",
+          "exported": false,
+          "lineCount": 1
+        },
+        {
+          "name": "PredictionResultsPanel",
+          "params": [
+            "{ result, homeTeam, awayTeam }"
+          ],
+          "returnType": "JSX.Element",
+          "exported": true,
+          "lineCount": 79
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/types/match",
+          "specifiers": [
+            "PredictionResult"
+          ]
+        },
+        {
+          "source": "@/types/team",
+          "specifiers": [
+            "Team"
+          ]
+        }
+      ],
+      "exports": [
+        "PredictionResultsPanel"
+      ],
+      "totalLines": 91,
+      "hasStructuralAnalysis": true
+    },
+    "src/components/Scoreboard.tsx": {
+      "filePath": "src/components/Scoreboard.tsx",
+      "contentHash": "915b7c3b03ce1e8f158580daa0e618a2a29f70b0029da36bd5d1cc5fef4c7019",
+      "functions": [
+        {
+          "name": "clampPct",
+          "params": [
+            "value"
+          ],
+          "returnType": "number",
+          "exported": false,
+          "lineCount": 1
+        },
+        {
+          "name": "Scoreboard",
+          "params": [
+            "{\n  homeTeam,\n  awayTeam,\n  homeScore,\n  awayScore,\n  minute,\n  second = 0,\n  possession\n}"
+          ],
+          "returnType": "JSX.Element",
+          "exported": true,
+          "lineCount": 71
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/types/team",
+          "specifiers": [
+            "Team"
+          ]
+        }
+      ],
+      "exports": [
+        "Scoreboard"
+      ],
+      "totalLines": 89,
+      "hasStructuralAnalysis": true
+    },
+    "src/components/StartingXI.tsx": {
+      "filePath": "src/components/StartingXI.tsx",
+      "contentHash": "45a7457dfa93e899a84a47b36060fef281b86ab3aca94a7d84e05efd2a8aab27",
+      "functions": [
+        {
+          "name": "PlayerList",
+          "params": [
+            "{ team }"
+          ],
+          "returnType": "JSX.Element",
+          "exported": false,
+          "lineCount": 24
+        },
+        {
+          "name": "StartingXI",
+          "params": [
+            "{ homeTeam, awayTeam }"
+          ],
+          "returnType": "JSX.Element",
+          "exported": true,
+          "lineCount": 8
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/types/team",
+          "specifiers": [
+            "Team"
+          ]
+        }
+      ],
+      "exports": [
+        "StartingXI"
+      ],
+      "totalLines": 41,
+      "hasStructuralAnalysis": true
+    },
+    "src/components/TeamSelector.tsx": {
+      "filePath": "src/components/TeamSelector.tsx",
+      "contentHash": "ebdb97cc7808f79a1581bc41a6d6001006fd668947ecac2fc43b21b6fcc4afc7",
+      "functions": [
+        {
+          "name": "TeamSelector",
+          "params": [
+            "{ label, value, options, onChange }"
+          ],
+          "returnType": "JSX.Element",
+          "exported": true,
+          "lineCount": 18
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/types/team",
+          "specifiers": [
+            "Team"
+          ]
+        }
+      ],
+      "exports": [
+        "TeamSelector"
+      ],
+      "totalLines": 28,
+      "hasStructuralAnalysis": true
+    },
+    "src/config/football.test.ts": {
+      "filePath": "src/config/football.test.ts",
+      "contentHash": "74f3cdb208adb99caa96441114a417a21878423afe7c84eee8220c8b32881338",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "vitest",
+          "specifiers": [
+            "describe",
+            "expect",
+            "it"
+          ]
+        },
+        {
+          "source": "./football",
+          "specifiers": [
+            "buildSupportedSeasons"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 14,
+      "hasStructuralAnalysis": true
+    },
+    "src/config/football.ts": {
+      "filePath": "src/config/football.ts",
+      "contentHash": "98ca9d27ecf72c2cc92fbbcec2cd9c6d8adecfcb50e2c008f8b4d6a44e1b4be9",
+      "functions": [
+        {
+          "name": "buildSupportedSeasons",
+          "params": [
+            "baseYear",
+            "count"
+          ],
+          "returnType": "string[]",
+          "exported": true,
+          "lineCount": 2
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "DEFAULT_FOOTBALL_CONFIG",
+        "SUPPORTED_LEAGUES",
+        "buildSupportedSeasons",
+        "SUPPORTED_SEASONS"
+      ],
+      "totalLines": 20,
+      "hasStructuralAnalysis": true
+    },
+    "src/data/mockMatches.ts": {
+      "filePath": "src/data/mockMatches.ts",
+      "contentHash": "a94473ee922c05e8b9052b084b5ed41dd272d28abd189f238150826646b72485",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "DEFAULT_SIMULATION_SETTINGS"
+      ],
+      "totalLines": 6,
+      "hasStructuralAnalysis": true
+    },
+    "src/data/players.ts": {
+      "filePath": "src/data/players.ts",
+      "contentHash": "4680bad26716b29857c292033b1e718375e92520cfd76029a4260198209ad91e",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/types/player",
+          "specifiers": [
+            "PlayerRating"
+          ]
+        }
+      ],
+      "exports": [
+        "cityStylePlayers",
+        "madridStylePlayers"
+      ],
+      "totalLines": 404,
+      "hasStructuralAnalysis": true
+    },
+    "src/data/statsbomb/sampleOpenData.ts": {
+      "filePath": "src/data/statsbomb/sampleOpenData.ts",
+      "contentHash": "339f77afb964c6bc8045b9fe2b0200ec264c7a584170076b0d221fc48155762b",
+      "functions": [
+        {
+          "name": "makeEvent",
+          "params": [
+            "event"
+          ],
+          "returnType": "MatchEvent",
+          "exported": false,
+          "lineCount": 4
+        },
+        {
+          "name": "clonePlayers",
+          "params": [
+            "players",
+            "teamId",
+            "teamName",
+            "idPrefix"
+          ],
+          "returnType": "PlayerRating[]",
+          "exported": false,
+          "lineCount": 16
+        },
+        {
+          "name": "cloneTeam",
+          "params": [
+            "team",
+            "id",
+            "name",
+            "shortName",
+            "color"
+          ],
+          "returnType": "Team",
+          "exported": false,
+          "lineCount": 8
+        },
+        {
+          "name": "mapSampleEventForTeams",
+          "params": [
+            "event",
+            "homeTeam",
+            "awayTeam"
+          ],
+          "returnType": "MatchEvent",
+          "exported": false,
+          "lineCount": 18
+        },
+        {
+          "name": "createLineup",
+          "params": [
+            "team",
+            "players",
+            "formation"
+          ],
+          "exported": false,
+          "lineCount": 13
+        },
+        {
+          "name": "createSampleMatch",
+          "params": [
+            "params"
+          ],
+          "returnType": "HistoricalMatch",
+          "exported": false,
+          "lineCount": 32
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/types/dataProvider",
+          "specifiers": [
+            "HistoricalCompetition",
+            "HistoricalMatch"
+          ]
+        },
+        {
+          "source": "@/types/event",
+          "specifiers": [
+            "MatchEvent"
+          ]
+        },
+        {
+          "source": "@/types/player",
+          "specifiers": [
+            "PlayerRating"
+          ]
+        },
+        {
+          "source": "@/types/team",
+          "specifiers": [
+            "Team"
+          ]
+        }
+      ],
+      "exports": [
+        "statsBombSampleCompetitions",
+        "statsBombSampleMatches"
+      ],
+      "totalLines": 536,
+      "hasStructuralAnalysis": true
+    },
+    "src/data/teams.ts": {
+      "filePath": "src/data/teams.ts",
+      "contentHash": "44beb31397743edcb6660abc8398c5add4e5bbbfcb354649d1af1fdc7d8b0c1a",
+      "functions": [
+        {
+          "name": "getTeamById",
+          "params": [
+            "teamId"
+          ],
+          "returnType": "Team | undefined",
+          "exported": true,
+          "lineCount": 2
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/data/players",
+          "specifiers": [
+            "cityStylePlayers",
+            "madridStylePlayers"
+          ]
+        },
+        {
+          "source": "@/types/team",
+          "specifiers": [
+            "Team"
+          ]
+        }
+      ],
+      "exports": [
+        "teams",
+        "getTeamById"
+      ],
+      "totalLines": 35,
+      "hasStructuralAnalysis": true
+    },
+    "src/engine/decisionModel.ts": {
+      "filePath": "src/engine/decisionModel.ts",
+      "contentHash": "cb5dd95d7c38d3b81d448bdc475cdb7e9bc8c78081cdab299e7d527e544af501",
+      "functions": [
+        {
+          "name": "normalizePitchDistance",
+          "params": [
+            "distanceToGoal"
+          ],
+          "returnType": "number",
+          "exported": false,
+          "lineCount": 2
+        },
+        {
+          "name": "chooseAction",
+          "params": [
+            "context",
+            "random"
+          ],
+          "returnType": "PossessionAction",
+          "exported": true,
+          "lineCount": 34
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/engine/probability",
+          "specifiers": [
+            "weightedChoice"
+          ]
+        },
+        {
+          "source": "@/engine/ratingModel",
+          "specifiers": [
+            "effectiveAttribute"
+          ]
+        },
+        {
+          "source": "@/engine/tactics",
+          "specifiers": [
+            "getTacticModifiers"
+          ]
+        },
+        {
+          "source": "@/engine/probability",
+          "specifiers": [
+            "RandomFn"
+          ]
+        },
+        {
+          "source": "@/types/player",
+          "specifiers": [
+            "PlayerRating"
+          ]
+        },
+        {
+          "source": "@/types/team",
+          "specifiers": [
+            "Team"
+          ]
+        }
+      ],
+      "exports": [
+        "chooseAction"
+      ],
+      "totalLines": 58,
+      "hasStructuralAnalysis": true
+    },
+    "src/engine/eventGenerator.ts": {
+      "filePath": "src/engine/eventGenerator.ts",
+      "contentHash": "e456b80dd512a239af36a16a1e14af0ea7b48872f851567a828b306427cf3416",
+      "functions": [
+        {
+          "name": "createMatchEvent",
+          "params": [
+            "params"
+          ],
+          "returnType": "MatchEvent",
+          "exported": true,
+          "lineCount": 44
+        },
+        {
+          "name": "getDistanceToGoal",
+          "params": [
+            "team",
+            "x",
+            "homeTeamId"
+          ],
+          "returnType": "number",
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "playerDistance",
+          "params": [
+            "a",
+            "b"
+          ],
+          "returnType": "number",
+          "exported": false,
+          "lineCount": 1
+        },
+        {
+          "name": "closestOpponent",
+          "params": [
+            "carrier",
+            "opponents"
+          ],
+          "returnType": "RuntimePlayer",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "getDefensivePressure",
+          "params": [
+            "carrier",
+            "opponents",
+            "defensiveTeam"
+          ],
+          "returnType": "number",
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "getSupportScore",
+          "params": [
+            "carrier",
+            "teammates",
+            "opponents"
+          ],
+          "returnType": "number",
+          "exported": true,
+          "lineCount": 22
+        },
+        {
+          "name": "targetBias",
+          "params": [
+            "target",
+            "team",
+            "carrierX",
+            "isBackpass",
+            "homeTeamId"
+          ],
+          "returnType": "number",
+          "exported": false,
+          "lineCount": 16
+        },
+        {
+          "name": "selectPassTarget",
+          "params": [
+            "params"
+          ],
+          "returnType": "RuntimePlayer",
+          "exported": true,
+          "lineCount": 43
+        },
+        {
+          "name": "estimatePassSuccess",
+          "params": [
+            "params"
+          ],
+          "returnType": "number",
+          "exported": true,
+          "lineCount": 13
+        },
+        {
+          "name": "estimateDribbleSuccess",
+          "params": [
+            "params"
+          ],
+          "returnType": "number",
+          "exported": true,
+          "lineCount": 17
+        },
+        {
+          "name": "estimateShotModel",
+          "params": [
+            "params"
+          ],
+          "returnType": "{\n  xg: number;\n  onTargetChance: number;\n  goalChance: number;\n}",
+          "exported": true,
+          "lineCount": 23
+        },
+        {
+          "name": "minuteLabel",
+          "params": [
+            "minute"
+          ],
+          "returnType": "string",
+          "exported": true,
+          "lineCount": 1
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/engine/probability",
+          "specifiers": [
+            "clamp",
+            "distance",
+            "randomBetween"
+          ]
+        },
+        {
+          "source": "@/engine/ratingModel",
+          "specifiers": [
+            "effectiveAttribute"
+          ]
+        },
+        {
+          "source": "@/engine/probability",
+          "specifiers": [
+            "RandomFn"
+          ]
+        },
+        {
+          "source": "@/types/event",
+          "specifiers": [
+            "MatchEvent",
+            "MatchEventType"
+          ]
+        },
+        {
+          "source": "@/types/player",
+          "specifiers": [
+            "PlayerRating"
+          ]
+        },
+        {
+          "source": "@/types/team",
+          "specifiers": [
+            "Team"
+          ]
+        }
+      ],
+      "exports": [
+        "createMatchEvent",
+        "getDistanceToGoal",
+        "closestOpponent",
+        "getDefensivePressure",
+        "getSupportScore",
+        "selectPassTarget",
+        "estimatePassSuccess",
+        "estimateDribbleSuccess",
+        "estimateShotModel",
+        "minuteLabel"
+      ],
+      "totalLines": 224,
+      "hasStructuralAnalysis": true
+    },
+    "src/engine/matchEngine.ts": {
+      "filePath": "src/engine/matchEngine.ts",
+      "contentHash": "c804f874b4a3ea0bbd178eb6bbefde1fbc42a2b176a4e5c23a52d948e9896553",
+      "functions": [
+        {
+          "name": "createStatBlock",
+          "params": [],
+          "returnType": "TeamStatBlock",
+          "exported": false,
+          "lineCount": 13
+        },
+        {
+          "name": "cloneStats",
+          "params": [
+            "stats"
+          ],
+          "returnType": "MatchStats",
+          "exported": false,
+          "lineCount": 4
+        },
+        {
+          "name": "toRuntimeTeam",
+          "params": [
+            "team",
+            "side"
+          ],
+          "returnType": "RuntimeTeam",
+          "exported": false,
+          "lineCount": 12
+        },
+        {
+          "name": "findRuntimePlayer",
+          "params": [
+            "runtimeTeams",
+            "playerId"
+          ],
+          "returnType": "RuntimePlayer | undefined",
+          "exported": false,
+          "lineCount": 9
+        },
+        {
+          "name": "findTeamById",
+          "params": [
+            "runtimeTeams",
+            "teamId"
+          ],
+          "returnType": "RuntimeTeam",
+          "exported": false,
+          "lineCount": 7
+        },
+        {
+          "name": "createFrame",
+          "params": [
+            "tick",
+            "minute",
+            "second",
+            "elapsedSeconds",
+            "runtimeTeams",
+            "score",
+            "ball",
+            "lastEventId"
+          ],
+          "returnType": "MatchFrame",
+          "exported": false,
+          "lineCount": 28
+        },
+        {
+          "name": "pickGoalkeeper",
+          "params": [
+            "team"
+          ],
+          "returnType": "RuntimePlayer",
+          "exported": false,
+          "lineCount": 2
+        },
+        {
+          "name": "pickKickoffCarrier",
+          "params": [
+            "team"
+          ],
+          "returnType": "RuntimePlayer",
+          "exported": false,
+          "lineCount": 10
+        },
+        {
+          "name": "reduceStamina",
+          "params": [
+            "team",
+            "random"
+          ],
+          "returnType": "void",
+          "exported": false,
+          "lineCount": 8
+        },
+        {
+          "name": "roleBandY",
+          "params": [
+            "player"
+          ],
+          "returnType": "number",
+          "exported": false,
+          "lineCount": 14
+        },
+        {
+          "name": "steerPlayer",
+          "params": [
+            "params"
+          ],
+          "returnType": "void",
+          "exported": false,
+          "lineCount": 32
+        },
+        {
+          "name": "updateTeamShape",
+          "params": [
+            "params"
+          ],
+          "returnType": "void",
+          "exported": false,
+          "lineCount": 47
+        },
+        {
+          "name": "applyOpenPlayMovement",
+          "params": [
+            "params"
+          ],
+          "returnType": "void",
+          "exported": false,
+          "lineCount": 27
+        },
+        {
+          "name": "clampOnPitch",
+          "params": [
+            "player"
+          ],
+          "returnType": "void",
+          "exported": false,
+          "lineCount": 6
+        },
+        {
+          "name": "placeForKickoff",
+          "params": [
+            "home",
+            "away"
+          ],
+          "returnType": "void",
+          "exported": false,
+          "lineCount": 9
+        },
+        {
+          "name": "markContribution",
+          "params": [
+            "ledger",
+            "playerId",
+            "amount"
+          ],
+          "returnType": "void",
+          "exported": false,
+          "lineCount": 6
+        },
+        {
+          "name": "simulateMatch",
+          "params": [
+            "homeTeam",
+            "awayTeam",
+            "options"
+          ],
+          "returnType": "MatchSummary",
+          "exported": true,
+          "lineCount": 766
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/engine/decisionModel",
+          "specifiers": [
+            "chooseAction"
+          ]
+        },
+        {
+          "source": "@/engine/eventGenerator",
+          "specifiers": [
+            "closestOpponent",
+            "createMatchEvent",
+            "estimateDribbleSuccess",
+            "estimatePassSuccess",
+            "estimateShotModel",
+            "getDefensivePressure",
+            "getDistanceToGoal",
+            "getSupportScore",
+            "minuteLabel",
+            "selectPassTarget",
+            "RuntimePlayer"
+          ]
+        },
+        {
+          "source": "@/engine/probability",
+          "specifiers": [
+            "clamp",
+            "createSeededRandom",
+            "distance",
+            "randomBetween"
+          ]
+        },
+        {
+          "source": "@/engine/ratingModel",
+          "specifiers": [
+            "effectiveAttribute",
+            "pickMvp"
+          ]
+        },
+        {
+          "source": "@/data/mockMatches",
+          "specifiers": [
+            "DEFAULT_SIMULATION_SETTINGS"
+          ]
+        },
+        {
+          "source": "@/types/event",
+          "specifiers": [
+            "MatchEvent"
+          ]
+        },
+        {
+          "source": "@/types/match",
+          "specifiers": [
+            "MatchFrame",
+            "MatchStats",
+            "MatchSummary",
+            "TeamStatBlock"
+          ]
+        },
+        {
+          "source": "@/types/team",
+          "specifiers": [
+            "Team"
+          ]
+        }
+      ],
+      "exports": [
+        "simulateMatch"
+      ],
+      "totalLines": 1055,
+      "hasStructuralAnalysis": true
+    },
+    "src/engine/prediction/monteCarlo.ts": {
+      "filePath": "src/engine/prediction/monteCarlo.ts",
+      "contentHash": "30e0af96abfb946fb50027ca3685d468e2a769b6bdbdc5fd6b14cf8fde9c1eb6",
+      "functions": [
+        {
+          "name": "percentage",
+          "params": [
+            "count",
+            "total"
+          ],
+          "returnType": "number",
+          "exported": false,
+          "lineCount": 1
+        },
+        {
+          "name": "topScorelines",
+          "params": [
+            "counts",
+            "total"
+          ],
+          "returnType": "ScorelineProbability[]",
+          "exported": false,
+          "lineCount": 9
+        },
+        {
+          "name": "representativeFor",
+          "params": [
+            "matches",
+            "likelyScoreline"
+          ],
+          "returnType": "MatchSummary",
+          "exported": false,
+          "lineCount": 11
+        },
+        {
+          "name": "runMonteCarloPrediction",
+          "params": [
+            "homeTeam",
+            "awayTeam",
+            "options"
+          ],
+          "returnType": "PredictionResult",
+          "exported": true,
+          "lineCount": 81
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/engine/matchEngine",
+          "specifiers": [
+            "simulateMatch"
+          ]
+        },
+        {
+          "source": "@/types/match",
+          "specifiers": [
+            "DataQuality",
+            "MatchSummary",
+            "PredictionResult",
+            "ScorelineProbability"
+          ]
+        },
+        {
+          "source": "@/types/team",
+          "specifiers": [
+            "Team"
+          ]
+        }
+      ],
+      "exports": [
+        "runMonteCarloPrediction"
+      ],
+      "totalLines": 125,
+      "hasStructuralAnalysis": true
+    },
+    "src/engine/probability.ts": {
+      "filePath": "src/engine/probability.ts",
+      "contentHash": "0b0a1bf51775c5abf7b90df60c44243ec3e5017da180e0ddc4f4aabbc7d24629",
+      "functions": [
+        {
+          "name": "clamp",
+          "params": [
+            "value",
+            "min",
+            "max"
+          ],
+          "returnType": "number",
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "lerp",
+          "params": [
+            "from",
+            "to",
+            "t"
+          ],
+          "returnType": "number",
+          "exported": true,
+          "lineCount": 1
+        },
+        {
+          "name": "distance",
+          "params": [
+            "x1",
+            "y1",
+            "x2",
+            "y2"
+          ],
+          "returnType": "number",
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "normalize",
+          "params": [
+            "weights"
+          ],
+          "returnType": "Record<string, number>",
+          "exported": true,
+          "lineCount": 17
+        },
+        {
+          "name": "weightedChoice",
+          "params": [
+            "weights",
+            "random"
+          ],
+          "returnType": "T",
+          "exported": true,
+          "lineCount": 17
+        },
+        {
+          "name": "seedStringToInt",
+          "params": [
+            "seed"
+          ],
+          "returnType": "number",
+          "exported": false,
+          "lineCount": 8
+        },
+        {
+          "name": "createSeededRandom",
+          "params": [
+            "seed"
+          ],
+          "returnType": "RandomFn",
+          "exported": true,
+          "lineCount": 11
+        },
+        {
+          "name": "randomBetween",
+          "params": [
+            "min",
+            "max",
+            "random"
+          ],
+          "returnType": "number",
+          "exported": true,
+          "lineCount": 2
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "clamp",
+        "lerp",
+        "distance",
+        "normalize",
+        "weightedChoice",
+        "createSeededRandom",
+        "randomBetween"
+      ],
+      "totalLines": 70,
+      "hasStructuralAnalysis": true
+    },
+    "src/engine/ratingBuilder.ts": {
+      "filePath": "src/engine/ratingBuilder.ts",
+      "contentHash": "7de82ccab6c9efad8e8e71734f3a06dca2fcc245481e2bb8a35496ba028fb126",
+      "functions": [
+        {
+          "name": "clampRating",
+          "params": [
+            "value"
+          ],
+          "returnType": "number",
+          "exported": false,
+          "lineCount": 1
+        },
+        {
+          "name": "per90",
+          "params": [
+            "value",
+            "minutes"
+          ],
+          "returnType": "number",
+          "exported": false,
+          "lineCount": 6
+        },
+        {
+          "name": "normalizePosition",
+          "params": [
+            "position"
+          ],
+          "returnType": "PlayerPosition",
+          "exported": true,
+          "lineCount": 16
+        },
+        {
+          "name": "startingPositionFor",
+          "params": [
+            "position",
+            "index",
+            "attacksRight"
+          ],
+          "returnType": "{ x: number; y: number }",
+          "exported": false,
+          "lineCount": 24
+        },
+        {
+          "name": "nameSeed",
+          "params": [
+            "name"
+          ],
+          "returnType": "number",
+          "exported": false,
+          "lineCount": 7
+        },
+        {
+          "name": "variance",
+          "params": [
+            "seed",
+            "range"
+          ],
+          "returnType": "number",
+          "exported": false,
+          "lineCount": 5
+        },
+        {
+          "name": "buildPlayerRating",
+          "params": [
+            "stats",
+            "options"
+          ],
+          "returnType": "PlayerRating",
+          "exported": true,
+          "lineCount": 114
+        },
+        {
+          "name": "buildRatingsFromStats",
+          "params": [
+            "stats",
+            "options"
+          ],
+          "returnType": "PlayerRating[]",
+          "exported": true,
+          "lineCount": 10
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/engine/probability",
+          "specifiers": [
+            "clamp"
+          ]
+        },
+        {
+          "source": "@/types/dataProvider",
+          "specifiers": [
+            "RawPlayerStats"
+          ]
+        },
+        {
+          "source": "@/types/player",
+          "specifiers": [
+            "PlayerPosition",
+            "PlayerRating"
+          ]
+        }
+      ],
+      "exports": [
+        "normalizePosition",
+        "buildPlayerRating",
+        "buildRatingsFromStats"
+      ],
+      "totalLines": 247,
+      "hasStructuralAnalysis": true
+    },
+    "src/engine/ratingModel.ts": {
+      "filePath": "src/engine/ratingModel.ts",
+      "contentHash": "f8e324ea0ea104b60e0d4879440a222e088a4d737341587a3387dacf7af5d25c",
+      "functions": [
+        {
+          "name": "toUnit",
+          "params": [
+            "value"
+          ],
+          "returnType": "number",
+          "exported": true,
+          "lineCount": 1
+        },
+        {
+          "name": "staminaEffect",
+          "params": [
+            "stamina"
+          ],
+          "returnType": "number",
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "effectiveAttribute",
+          "params": [
+            "player",
+            "attribute",
+            "runtimeStamina"
+          ],
+          "returnType": "number",
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "pickMvp",
+          "params": [
+            "players",
+            "contributions",
+            "events"
+          ],
+          "returnType": "string",
+          "exported": true,
+          "lineCount": 33
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/types/event",
+          "specifiers": [
+            "MatchEvent"
+          ]
+        },
+        {
+          "source": "@/types/player",
+          "specifiers": [
+            "PlayerRating"
+          ]
+        }
+      ],
+      "exports": [
+        "toUnit",
+        "staminaEffect",
+        "effectiveAttribute",
+        "pickMvp"
+      ],
+      "totalLines": 67,
+      "hasStructuralAnalysis": true
+    },
+    "src/engine/replayEngine.ts": {
+      "filePath": "src/engine/replayEngine.ts",
+      "contentHash": "8b255564661433512ec7a82f877a1aadb978e5364320afb0feaa19a5c77a1d9a",
+      "functions": [
+        {
+          "name": "createStatBlock",
+          "params": [],
+          "returnType": "TeamStatBlock",
+          "exported": false,
+          "lineCount": 13
+        },
+        {
+          "name": "cloneStats",
+          "params": [
+            "stats"
+          ],
+          "returnType": "MatchStats",
+          "exported": false,
+          "lineCount": 4
+        },
+        {
+          "name": "makeRuntimePlayers",
+          "params": [
+            "team"
+          ],
+          "returnType": "ReplayPlayerState[]",
+          "exported": false,
+          "lineCount": 7
+        },
+        {
+          "name": "findPlayer",
+          "params": [
+            "players",
+            "playerId"
+          ],
+          "returnType": "ReplayPlayerState | undefined",
+          "exported": false,
+          "lineCount": 2
+        },
+        {
+          "name": "sideForTeam",
+          "params": [
+            "match",
+            "teamId"
+          ],
+          "returnType": "\"home\" | \"away\" | undefined",
+          "exported": false,
+          "lineCount": 9
+        },
+        {
+          "name": "updateStats",
+          "params": [
+            "stats",
+            "match",
+            "event"
+          ],
+          "returnType": "void",
+          "exported": false,
+          "lineCount": 41
+        },
+        {
+          "name": "nudgePlayers",
+          "params": [
+            "players",
+            "event"
+          ],
+          "returnType": "void",
+          "exported": false,
+          "lineCount": 17
+        },
+        {
+          "name": "createFrame",
+          "params": [
+            "params"
+          ],
+          "returnType": "MatchFrame",
+          "exported": false,
+          "lineCount": 24
+        },
+        {
+          "name": "buildReplayMatch",
+          "params": [
+            "historicalMatch"
+          ],
+          "returnType": "MatchSummary",
+          "exported": true,
+          "lineCount": 93
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/engine/ratingModel",
+          "specifiers": [
+            "pickMvp"
+          ]
+        },
+        {
+          "source": "@/types/dataProvider",
+          "specifiers": [
+            "HistoricalMatch"
+          ]
+        },
+        {
+          "source": "@/types/event",
+          "specifiers": [
+            "MatchEvent"
+          ]
+        },
+        {
+          "source": "@/types/match",
+          "specifiers": [
+            "MatchFrame",
+            "MatchStats",
+            "MatchSummary",
+            "TeamStatBlock"
+          ]
+        },
+        {
+          "source": "@/types/player",
+          "specifiers": [
+            "PlayerRating"
+          ]
+        },
+        {
+          "source": "@/types/team",
+          "specifiers": [
+            "Team"
+          ]
+        }
+      ],
+      "exports": [
+        "buildReplayMatch"
+      ],
+      "totalLines": 233,
+      "hasStructuralAnalysis": true
+    },
+    "src/engine/startingXi.ts": {
+      "filePath": "src/engine/startingXi.ts",
+      "contentHash": "da4a1ee3ed53fddbd8c7b1e2197b0edbadbfa1c329046686224e6e85aef1e74e",
+      "functions": [
+        {
+          "name": "overall",
+          "params": [
+            "player"
+          ],
+          "returnType": "number",
+          "exported": false,
+          "lineCount": 15
+        },
+        {
+          "name": "sortByRoleStrength",
+          "params": [
+            "players"
+          ],
+          "returnType": "PlayerRating[]",
+          "exported": false,
+          "lineCount": 2
+        },
+        {
+          "name": "assignShapeCoordinates",
+          "params": [
+            "players",
+            "attacksRight"
+          ],
+          "returnType": "PlayerRating[]",
+          "exported": false,
+          "lineCount": 40
+        },
+        {
+          "name": "buildStartingXI",
+          "params": [
+            "squad",
+            "options"
+          ],
+          "returnType": "PlayerRating[]",
+          "exported": true,
+          "lineCount": 22
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/types/player",
+          "specifiers": [
+            "PlayerPosition",
+            "PlayerRating"
+          ]
+        }
+      ],
+      "exports": [
+        "buildStartingXI"
+      ],
+      "totalLines": 92,
+      "hasStructuralAnalysis": true
+    },
+    "src/engine/tactics.ts": {
+      "filePath": "src/engine/tactics.ts",
+      "contentHash": "b93256aa7825f3ecd5de4df95d4058a3aa645bc8ecd9b082c9e691fb6adbc53a",
+      "functions": [
+        {
+          "name": "getTacticModifiers",
+          "params": [
+            "style"
+          ],
+          "returnType": "TacticModifiers",
+          "exported": true,
+          "lineCount": 1
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/types/team",
+          "specifiers": [
+            "TacticStyle"
+          ]
+        }
+      ],
+      "exports": [
+        "getTacticModifiers"
+      ],
+      "totalLines": 62,
+      "hasStructuralAnalysis": true
+    },
+    "src/providers/apiFootballErrors.test.ts": {
+      "filePath": "src/providers/apiFootballErrors.test.ts",
+      "contentHash": "7e8792b098fb6a5ed2d8a4dc570ed50b6df5e3235a9847813c4ba84ed3b762a0",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "vitest",
+          "specifiers": [
+            "describe",
+            "expect",
+            "it"
+          ]
+        },
+        {
+          "source": "./apiFootballErrors",
+          "specifiers": [
+            "classifyApiFootballError"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 26,
+      "hasStructuralAnalysis": true
+    },
+    "src/providers/apiFootballErrors.ts": {
+      "filePath": "src/providers/apiFootballErrors.ts",
+      "contentHash": "8a121d9f672a7e2865a0ade0d9f44149becd96ae0177f1686d7264ecd7f69c0b",
+      "functions": [
+        {
+          "name": "flattenErrorText",
+          "params": [
+            "value"
+          ],
+          "returnType": "string",
+          "exported": false,
+          "lineCount": 18
+        },
+        {
+          "name": "classifyApiFootballError",
+          "params": [
+            "status",
+            "details"
+          ],
+          "returnType": "{ state: ProviderConnectionState; message: string }",
+          "exported": true,
+          "lineCount": 32
+        }
+      ],
+      "classes": [
+        {
+          "name": "ApiFootballHttpError",
+          "methods": [
+            "constructor"
+          ],
+          "properties": [
+            "status",
+            "state"
+          ],
+          "exported": true,
+          "lineCount": 11
+        }
+      ],
+      "imports": [
+        {
+          "source": "@/types/dataProvider",
+          "specifiers": [
+            "ProviderConnectionState"
+          ]
+        }
+      ],
+      "exports": [
+        "ApiFootballHttpError",
+        "classifyApiFootballError"
+      ],
+      "totalLines": 66,
+      "hasStructuralAnalysis": true
+    },
+    "src/providers/apiFootballProvider.test.ts": {
+      "filePath": "src/providers/apiFootballProvider.test.ts",
+      "contentHash": "a16ee6ffa3548f4102b5d914f52fa1b4f0acc35c91d8d1d82543441fdd9ddbb5",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "vitest",
+          "specifiers": [
+            "describe",
+            "expect",
+            "it"
+          ]
+        },
+        {
+          "source": "./season",
+          "specifiers": [
+            "previousSeason"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 15,
+      "hasStructuralAnalysis": true
+    },
+    "src/providers/apiFootballProvider.ts": {
+      "filePath": "src/providers/apiFootballProvider.ts",
+      "contentHash": "86e86d96924ce3652a139dd0b243c15fcc3a825ebfefa5dda76ff5b59a016bf7",
+      "functions": [
+        {
+          "name": "connectedStatus",
+          "params": [
+            "extra"
+          ],
+          "returnType": "ProviderStatus",
+          "exported": false,
+          "lineCount": 7
+        },
+        {
+          "name": "cacheStatus",
+          "params": [
+            "cachedAt"
+          ],
+          "returnType": "ProviderStatus",
+          "exported": false,
+          "lineCount": 8
+        },
+        {
+          "name": "mapPosition",
+          "params": [
+            "value"
+          ],
+          "returnType": "PlayerPosition",
+          "exported": false,
+          "lineCount": 16
+        },
+        {
+          "name": "tacticForTeamIndex",
+          "params": [
+            "index"
+          ],
+          "returnType": "TacticStyle",
+          "exported": false,
+          "lineCount": 4
+        },
+        {
+          "name": "numericExternalId",
+          "params": [
+            "id"
+          ],
+          "returnType": "string",
+          "exported": false,
+          "lineCount": 1
+        }
+      ],
+      "classes": [
+        {
+          "name": "ApiFootballProvider",
+          "methods": [
+            "getStatus",
+            "request",
+            "getTeams",
+            "getFixtures",
+            "getPlayerStats",
+            "getSquad",
+            "getLineups",
+            "getInjuries",
+            "getFixtureEvents",
+            "getStandings",
+            "getPredictions"
+          ],
+          "properties": [
+            "apiKey"
+          ],
+          "exported": true,
+          "lineCount": 462
+        }
+      ],
+      "imports": [
+        {
+          "source": "server-only",
+          "specifiers": []
+        },
+        {
+          "source": "@/engine/ratingBuilder",
+          "specifiers": [
+            "buildRatingsFromStats"
+          ]
+        },
+        {
+          "source": "@/providers/cache/fileCache",
+          "specifiers": [
+            "isFresh",
+            "readCache",
+            "writeCache"
+          ]
+        },
+        {
+          "source": "@/providers/apiFootballErrors",
+          "specifiers": [
+            "ApiFootballHttpError",
+            "classifyApiFootballError"
+          ]
+        },
+        {
+          "source": "@/providers/season",
+          "specifiers": [
+            "previousSeason"
+          ]
+        },
+        {
+          "source": "@/types/dataProvider",
+          "specifiers": [
+            "FixtureSummary",
+            "FootballDataProvider",
+            "Lineup",
+            "ProviderResponse",
+            "ProviderStatus",
+            "RawPlayerStats"
+          ]
+        },
+        {
+          "source": "@/types/player",
+          "specifiers": [
+            "PlayerRating",
+            "PlayerPosition"
+          ]
+        },
+        {
+          "source": "@/types/team",
+          "specifiers": [
+            "Team",
+            "TacticStyle"
+          ]
+        }
+      ],
+      "exports": [
+        "ApiFootballProvider",
+        "apiFootballProvider"
+      ],
+      "totalLines": 548,
+      "hasStructuralAnalysis": true
+    },
+    "src/providers/cache/fileCache.ts": {
+      "filePath": "src/providers/cache/fileCache.ts",
+      "contentHash": "3fd412a7bd4cf4127c6ffceb61aed1b609912af8fbe31493e524a0426d998cdf",
+      "functions": [
+        {
+          "name": "safeKey",
+          "params": [
+            "key"
+          ],
+          "returnType": "string",
+          "exported": false,
+          "lineCount": 1
+        },
+        {
+          "name": "readCache",
+          "params": [
+            "key"
+          ],
+          "returnType": "Promise<CacheEntry<T> | null>",
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "writeCache",
+          "params": [
+            "key",
+            "data",
+            "ttlMs"
+          ],
+          "returnType": "Promise<CacheEntry<T>>",
+          "exported": true,
+          "lineCount": 11
+        },
+        {
+          "name": "isFresh",
+          "params": [
+            "entry"
+          ],
+          "returnType": "boolean",
+          "exported": true,
+          "lineCount": 1
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "fs/promises",
+          "specifiers": [
+            "mkdir",
+            "readFile",
+            "writeFile"
+          ]
+        },
+        {
+          "source": "path",
+          "specifiers": [
+            "path"
+          ]
+        }
+      ],
+      "exports": [
+        "readCache",
+        "writeCache",
+        "isFresh"
+      ],
+      "totalLines": 36,
+      "hasStructuralAnalysis": true
+    },
+    "src/providers/fallback/localDemoProvider.ts": {
+      "filePath": "src/providers/fallback/localDemoProvider.ts",
+      "contentHash": "b9f9993d5522ae599fd792ddfb1583767bcd779409d90565fd8a084125b3b010",
+      "functions": [
+        {
+          "name": "toRawStats",
+          "params": [
+            "player"
+          ],
+          "returnType": "RawPlayerStats",
+          "exported": false,
+          "lineCount": 22
+        }
+      ],
+      "classes": [
+        {
+          "name": "LocalDemoProvider",
+          "methods": [
+            "getStatus",
+            "getTeams",
+            "getFixtures",
+            "getSquad",
+            "getPlayerStats",
+            "getLineups"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 59
+        }
+      ],
+      "imports": [
+        {
+          "source": "@/data/teams",
+          "specifiers": [
+            "teams"
+          ]
+        },
+        {
+          "source": "@/types/dataProvider",
+          "specifiers": [
+            "FixtureSummary",
+            "FootballDataProvider",
+            "Lineup",
+            "ProviderResponse",
+            "ProviderStatus",
+            "RawPlayerStats"
+          ]
+        },
+        {
+          "source": "@/types/player",
+          "specifiers": [
+            "PlayerRating"
+          ]
+        },
+        {
+          "source": "@/types/team",
+          "specifiers": [
+            "Team"
+          ]
+        }
+      ],
+      "exports": [
+        "LocalDemoProvider",
+        "localDemoProvider"
+      ],
+      "totalLines": 117,
+      "hasStructuralAnalysis": true
+    },
+    "src/providers/placeholderProviders.ts": {
+      "filePath": "src/providers/placeholderProviders.ts",
+      "contentHash": "de6546ec966910aa0a09d91ee4e2a817f4b6d68981298219d3bd90ea1b0b2610",
+      "functions": [
+        {
+          "name": "makePlaceholderStatus",
+          "params": [
+            "label"
+          ],
+          "returnType": "ProviderStatus",
+          "exported": false,
+          "lineCount": 6
+        },
+        {
+          "name": "empty",
+          "params": [
+            "status",
+            "data"
+          ],
+          "returnType": "Promise<ProviderResponse<T>>",
+          "exported": false,
+          "lineCount": 1
+        }
+      ],
+      "classes": [
+        {
+          "name": "FootballDataOrgProvider",
+          "methods": [
+            "getStatus",
+            "getTeams",
+            "getFixtures",
+            "getSquad",
+            "getPlayerStats",
+            "getLineups"
+          ],
+          "properties": [
+            "status"
+          ],
+          "exported": true,
+          "lineCount": 27
+        },
+        {
+          "name": "OpenFootballProvider",
+          "methods": [
+            "getStatus",
+            "getTeams",
+            "getFixtures",
+            "getSquad",
+            "getPlayerStats",
+            "getLineups"
+          ],
+          "properties": [
+            "status"
+          ],
+          "exported": true,
+          "lineCount": 27
+        }
+      ],
+      "imports": [
+        {
+          "source": "@/types/dataProvider",
+          "specifiers": [
+            "FootballDataProvider",
+            "ProviderResponse",
+            "ProviderStatus"
+          ]
+        },
+        {
+          "source": "@/types/dataProvider",
+          "specifiers": [
+            "FixtureSummary",
+            "Lineup",
+            "RawPlayerStats"
+          ]
+        },
+        {
+          "source": "@/types/player",
+          "specifiers": [
+            "PlayerRating"
+          ]
+        },
+        {
+          "source": "@/types/team",
+          "specifiers": [
+            "Team"
+          ]
+        }
+      ],
+      "exports": [
+        "FootballDataOrgProvider",
+        "OpenFootballProvider"
+      ],
+      "totalLines": 70,
+      "hasStructuralAnalysis": true
+    },
+    "src/providers/season.ts": {
+      "filePath": "src/providers/season.ts",
+      "contentHash": "9012a6e5bbff6fb3bd8b7ba4ad39b83b2e4a7b641b739d49bee21eb4db7ce097",
+      "functions": [
+        {
+          "name": "previousSeason",
+          "params": [
+            "season"
+          ],
+          "returnType": "string | undefined",
+          "exported": true,
+          "lineCount": 7
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [
+        "previousSeason"
+      ],
+      "totalLines": 8,
+      "hasStructuralAnalysis": true
+    },
+    "src/providers/statsBombOpenDataProvider.ts": {
+      "filePath": "src/providers/statsBombOpenDataProvider.ts",
+      "contentHash": "21aadb3139bfec0b49caef96e430ff1510a253ccca08ab75d50befaf81d2009d",
+      "functions": [
+        {
+          "name": "getStatsBombCompetitions",
+          "params": [],
+          "exported": true,
+          "lineCount": 1
+        },
+        {
+          "name": "getStatsBombMatches",
+          "params": [
+            "competitionId",
+            "seasonId"
+          ],
+          "exported": true,
+          "lineCount": 2
+        },
+        {
+          "name": "getStatsBombLineups",
+          "params": [
+            "matchId"
+          ],
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "getStatsBombEvents",
+          "params": [
+            "matchId"
+          ],
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "getStatsBomb360",
+          "params": [
+            "matchId"
+          ],
+          "exported": true,
+          "lineCount": 1
+        }
+      ],
+      "classes": [
+        {
+          "name": "StatsBombOpenDataProvider",
+          "methods": [
+            "getCompetitions",
+            "getMatches",
+            "getMatch",
+            "getFreezeFrames"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 46
+        }
+      ],
+      "imports": [
+        {
+          "source": "@/data/statsbomb/sampleOpenData",
+          "specifiers": [
+            "statsBombSampleCompetitions",
+            "statsBombSampleMatches"
+          ]
+        },
+        {
+          "source": "@/types/dataProvider",
+          "specifiers": [
+            "HistoricalCompetition",
+            "HistoricalEventDataProvider",
+            "HistoricalMatch",
+            "ProviderResponse",
+            "ProviderStatus"
+          ]
+        }
+      ],
+      "exports": [
+        "StatsBombOpenDataProvider",
+        "statsBombOpenDataProvider",
+        "getStatsBombCompetitions",
+        "getStatsBombMatches",
+        "getStatsBombLineups",
+        "getStatsBombEvents",
+        "getStatsBomb360"
+      ],
+      "totalLines": 91,
+      "hasStructuralAnalysis": true
+    },
+    "src/types/dataProvider.ts": {
+      "filePath": "src/types/dataProvider.ts",
+      "contentHash": "38a43ce080cbd1f0193562acbbcc3d1d4d714054ec07fbb543475dc13fe18cf2",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/types/event",
+          "specifiers": [
+            "MatchEvent"
+          ]
+        },
+        {
+          "source": "@/types/player",
+          "specifiers": [
+            "PlayerPosition",
+            "PlayerRating"
+          ]
+        },
+        {
+          "source": "@/types/team",
+          "specifiers": [
+            "Team"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 159,
+      "hasStructuralAnalysis": true
+    },
+    "src/types/event.ts": {
+      "filePath": "src/types/event.ts",
+      "contentHash": "7a40434a2e6edc8dfd595e583921a01ba94446f4808ee7d50b6351092064ca6f",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 46,
+      "hasStructuralAnalysis": true
+    },
+    "src/types/match.ts": {
+      "filePath": "src/types/match.ts",
+      "contentHash": "9e8f050198c7bbcbf582d4b618e968e72d73b15e9a6e5fcb4a5e776615ccd796",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/types/event",
+          "specifiers": [
+            "MatchEvent"
+          ]
+        },
+        {
+          "source": "@/types/team",
+          "specifiers": [
+            "Team"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 108,
+      "hasStructuralAnalysis": true
+    },
+    "src/types/player.ts": {
+      "filePath": "src/types/player.ts",
+      "contentHash": "857c4b8f1253c2eaf7de4bd5b3d8307aecb57d313d631072b1c7a022174383f0",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 26,
+      "hasStructuralAnalysis": true
+    },
+    "src/types/team.ts": {
+      "filePath": "src/types/team.ts",
+      "contentHash": "07ddf36c6905c23aa6fdb6e7f260c830642bcbc789d8bbd66297c103872a2c4c",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "@/types/player",
+          "specifiers": [
+            "PlayerRating"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 23,
+      "hasStructuralAnalysis": true
+    },
+    "tailwind.config.ts": {
+      "filePath": "tailwind.config.ts",
+      "contentHash": "034a7cc69756063be2ddabb30cb45238948084956396dd0f495d6f83f24d69fa",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "tailwindcss",
+          "specifiers": [
+            "Config"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 39,
+      "hasStructuralAnalysis": true
+    },
+    "tsconfig.json": {
+      "filePath": "tsconfig.json",
+      "contentHash": "9290248478e9944e0d7e844d60c3272396748efb28f6bea8c2a197e6851b119c",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 29,
+      "hasStructuralAnalysis": true
+    },
+    "tsconfig.tsbuildinfo": {
+      "filePath": "tsconfig.tsbuildinfo",
+      "contentHash": "b589b245aa6c6e7ae6591e19a3b9acbfdff66694b2b3feb68b7878aa240fab5f",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 1,
+      "hasStructuralAnalysis": false
+    }
+  }
+}

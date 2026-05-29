@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { DataSourceStatus } from "@/components/DataSourceStatus";
 import { MatchControls } from "@/components/MatchControls";
@@ -91,7 +91,8 @@ const dataQualityFor = (apiStatus?: ProviderStatus): DataQuality => {
       score: apiStatus.state === "connected" ? 0.72 : 0.62,
       label: apiStatus.state === "connected" ? "medium" : "low",
       warnings: [
-        "API-Football data is converted into simulator ratings with transparent approximations where detailed stats are unavailable."
+        "API-Football provides squads, fixtures, and aggregate stats, but not continuous player tracking coordinates.",
+        "SoccerSimulator estimates positioning, possession transitions, and passing lanes with a tactical simulation layer."
       ]
     };
   }
@@ -148,6 +149,7 @@ export default function SimulatorPage(): JSX.Element {
   const [match, setMatch] = useState<MatchSummary | null>(null);
   const [prediction, setPrediction] = useState<PredictionResult | null>(null);
   const [playhead, setPlayhead] = useState(0);
+  const [frameProgress, setFrameProgress] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [replaySpeed, setReplaySpeed] = useState(2);
   const [isWorking, setIsWorking] = useState(false);
@@ -166,8 +168,18 @@ export default function SimulatorPage(): JSX.Element {
   const selectedFixture = fixtures.find((fixture) => fixture.id === fixtureId);
   const activeHomeTeam = match?.homeTeam ?? selectedHomeTeam;
   const activeAwayTeam = match?.awayTeam ?? selectedAwayTeam;
-  const frameDurationMs = Math.max(45, Math.floor(240 / replaySpeed));
+  const playheadRef = useRef(0);
+  const frameProgressRef = useRef(0);
+  const frameDurationMs = Math.max(90, Math.floor(340 / replaySpeed));
   const replaySeasons = competitions.filter((competition) => competition.id === competitionId);
+
+  useEffect(() => {
+    playheadRef.current = playhead;
+  }, [playhead]);
+
+  useEffect(() => {
+    frameProgressRef.current = frameProgress;
+  }, [frameProgress]);
 
   const loadHistoricalMatches = useCallback(async (nextCompetitionId: string, nextSeasonId: string): Promise<void> => {
     const matchesResponse = await fetch(
@@ -268,34 +280,88 @@ export default function SimulatorPage(): JSX.Element {
   }, [awayTeamId, homeTeamId, loadSquadForTeam, mode]);
 
   useEffect(() => {
-    if (!match || !isPlaying) {
+    if (!match) {
+      frameProgressRef.current = 0;
+      setFrameProgress(0);
+      return;
+    }
+    if (!isPlaying) {
       return;
     }
 
     const lastIndex = match.frames.length - 1;
-    const intervalId = window.setInterval(() => {
-      setPlayhead((current) => {
-        if (current >= lastIndex) {
-          setIsPlaying(false);
-          return current;
-        }
-        return current + 1;
-      });
-    }, frameDurationMs);
+    if (playheadRef.current >= lastIndex) {
+      setIsPlaying(false);
+      frameProgressRef.current = 0;
+      setFrameProgress(0);
+      return;
+    }
 
-    return () => {
-      window.clearInterval(intervalId);
+    let rafId = 0;
+    let lastTimestamp = 0;
+    let accumulator = frameProgressRef.current * frameDurationMs;
+
+    const step = (timestamp: number): void => {
+      if (!lastTimestamp) {
+        lastTimestamp = timestamp;
+      }
+
+      const deltaMs = Math.min(64, timestamp - lastTimestamp);
+      lastTimestamp = timestamp;
+      accumulator += deltaMs;
+
+      let nextIndex = playheadRef.current;
+      while (accumulator >= frameDurationMs && nextIndex < lastIndex) {
+        accumulator -= frameDurationMs;
+        nextIndex += 1;
+      }
+
+      if (nextIndex !== playheadRef.current) {
+        playheadRef.current = nextIndex;
+        setPlayhead(nextIndex);
+      }
+
+      if (nextIndex >= lastIndex) {
+        frameProgressRef.current = 0;
+        setFrameProgress(0);
+        setIsPlaying(false);
+        return;
+      }
+
+      const nextProgress = accumulator / frameDurationMs;
+      frameProgressRef.current = nextProgress;
+      setFrameProgress(nextProgress);
+      rafId = window.requestAnimationFrame(step);
     };
-  }, [match, isPlaying, frameDurationMs]);
+
+    rafId = window.requestAnimationFrame(step);
+    return () => {
+      window.cancelAnimationFrame(rafId);
+    };
+  }, [frameDurationMs, isPlaying, match]);
 
   const currentFrame = match?.frames[playhead] ?? makePreviewFrame(activeHomeTeam, activeAwayTeam);
   const nextFrame = match?.frames[playhead + 1];
-  const currentEvent = match?.events.find((event) => event.id === currentFrame.lastEventId);
+  const eventFrame = frameProgress > 0.55 && nextFrame ? nextFrame : currentFrame;
+  const currentEvent = match?.events.find((event) => event.id === eventFrame.lastEventId);
+  const interpolatedElapsedSeconds = nextFrame
+    ? currentFrame.elapsedSeconds + (nextFrame.elapsedSeconds - currentFrame.elapsedSeconds) * frameProgress
+    : currentFrame.elapsedSeconds;
+  const interpolatedMinute = Math.floor(interpolatedElapsedSeconds / 60);
+  const interpolatedSecond = Math.floor(interpolatedElapsedSeconds % 60);
   const liveStats = match?.statsByTick[playhead] ?? emptyStats();
   const totalPossessionTicks = Math.max(1, liveStats.home.possessionTicks + liveStats.away.possessionTicks);
   const homePossession = Math.round((liveStats.home.possessionTicks / totalPossessionTicks) * 100);
   const awayPossession = 100 - homePossession;
   const isFinal = Boolean(match && playhead >= match.frames.length - 1 && !isPlaying);
+  const dataLayerInsights = useMemo(
+    () => [
+      "API-Football source quality: fixtures, squads, and aggregate player stats are available; event-level tracking positions are not.",
+      "Synthetic tactical layer: off-ball positioning, passing routes, possession transitions, and speed curves are estimated in-engine.",
+      "Motion quality: rendering uses requestAnimationFrame with continuous interpolation for smooth player movement."
+    ],
+    []
+  );
 
   const mvpName = useMemo(() => {
     if (!match) {
@@ -338,6 +404,9 @@ export default function SimulatorPage(): JSX.Element {
   const beginPlayback = (summary: MatchSummary): void => {
     setMatch(summary);
     setPlayhead(0);
+    playheadRef.current = 0;
+    frameProgressRef.current = 0;
+    setFrameProgress(0);
     setIsPlaying(true);
   };
 
@@ -394,11 +463,15 @@ export default function SimulatorPage(): JSX.Element {
     mode === "prediction" ? "Run 500 Monte Carlo Sims" : mode === "replay" ? "Load Replay" : "Run Demo Match";
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-[1440px] flex-col gap-4 px-4 py-5 sm:px-6 lg:px-8">
+    <main className="mx-auto flex min-h-screen max-w-[1520px] flex-col gap-4 px-4 py-5 sm:px-6 lg:px-8">
+      {/* Header */}
       <header className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-extrabold text-white">RealBall Sim</h1>
-          <p className="text-sm text-slate-200">Data-driven event simulation and historical 2D football replay.</p>
+          <div className="flex items-center gap-3">
+            <span className="text-3xl">⚽</span>
+            <h1 className="font-display text-3xl font-bold text-netWhite">SoccerSimulator</h1>
+          </div>
+          <p className="mt-1 text-sm text-emerald-100/60">Data-driven event simulation and 2D tactical football replay.</p>
         </div>
       </header>
 
@@ -411,14 +484,27 @@ export default function SimulatorPage(): JSX.Element {
         isRefreshing={isRefreshing}
       />
 
+      {/* Simulation insights */}
+      <section className="rounded-xl border border-emerald-500/20 bg-panel/60 p-4">
+        <h2 className="font-display text-xs font-semibold uppercase tracking-[0.2em] text-emerald-400">Simulation Layer Insights</h2>
+        <div className="mt-3 grid gap-2 text-xs text-emerald-100/70 lg:grid-cols-3">
+          {dataLayerInsights.map((insight) => (
+            <p key={insight} className="rounded-md border border-emerald-500/10 bg-stadium/40 px-3 py-2">
+              {insight}
+            </p>
+          ))}
+        </div>
+      </section>
+
+      {/* Prediction / Demo controls */}
       {mode === "prediction" || mode === "demo" ? (
-        <section className="grid gap-3 rounded-md border border-slate-700 bg-slate-950/60 p-3 lg:grid-cols-[0.8fr_0.6fr_1fr_1fr_1fr]">
-          <label className="flex min-w-[180px] flex-col gap-2 text-sm text-slate-100">
-            <span className="font-medium text-slate-200">League</span>
+        <section className="grid gap-3 rounded-xl border border-emerald-500/20 bg-panel/60 p-4 lg:grid-cols-[0.8fr_0.6fr_1fr_1fr_1fr]">
+          <label className="flex min-w-[180px] flex-col gap-1.5 text-sm text-emerald-100">
+            <span className="font-semibold text-emerald-300">League</span>
             <select
               value={leagueId}
               onChange={(event) => setLeagueId(event.target.value)}
-              className="rounded-md border border-slate-600 bg-slate-900 px-3 py-2 text-sm text-slate-50 outline-none transition focus:border-accent"
+              className="rounded-lg border border-emerald-500/30 bg-stadium px-3 py-2 text-sm text-emerald-50 outline-none transition focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/30"
             >
               {SUPPORTED_LEAGUES.map((league) => (
                 <option key={league.id} value={league.id}>
@@ -427,12 +513,12 @@ export default function SimulatorPage(): JSX.Element {
               ))}
             </select>
           </label>
-          <label className="flex min-w-[140px] flex-col gap-2 text-sm text-slate-100">
-            <span className="font-medium text-slate-200">Season</span>
+          <label className="flex min-w-[140px] flex-col gap-1.5 text-sm text-emerald-100">
+            <span className="font-semibold text-emerald-300">Season</span>
             <select
               value={season}
               onChange={(event) => setSeason(event.target.value)}
-              className="rounded-md border border-slate-600 bg-slate-900 px-3 py-2 text-sm text-slate-50 outline-none transition focus:border-accent"
+              className="rounded-lg border border-emerald-500/30 bg-stadium px-3 py-2 text-sm text-emerald-50 outline-none transition focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/30"
             >
               {SUPPORTED_SEASONS.map((supportedSeason) => (
                 <option key={supportedSeason} value={supportedSeason}>
@@ -443,12 +529,12 @@ export default function SimulatorPage(): JSX.Element {
           </label>
           <TeamSelector label="Team A" value={selectedHomeTeam.id} options={predictionTeams} onChange={onHomeChange} />
           <TeamSelector label="Team B" value={selectedAwayTeam.id} options={predictionTeams} onChange={onAwayChange} />
-          <label className="flex min-w-[220px] flex-col gap-2 text-sm text-slate-100">
-            <span className="font-medium text-slate-200">Upcoming fixture</span>
+          <label className="flex min-w-[220px] flex-col gap-1.5 text-sm text-emerald-100">
+            <span className="font-semibold text-emerald-300">Upcoming fixture</span>
             <select
               value={fixtureId}
               onChange={(event) => setFixtureId(event.target.value)}
-              className="rounded-md border border-slate-600 bg-slate-900 px-3 py-2 text-sm text-slate-50 outline-none transition focus:border-accent"
+              className="rounded-lg border border-emerald-500/30 bg-stadium px-3 py-2 text-sm text-emerald-50 outline-none transition focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/30"
             >
               {fixtures.length === 0 ? (
                 <option value="">No fixture data loaded</option>
@@ -463,22 +549,26 @@ export default function SimulatorPage(): JSX.Element {
           </label>
           <div className="lg:col-span-5">
             {isRefreshing || squadLoadingTeamIds.length > 0 ? (
-              <p className="text-xs text-slate-300">
-                Loading {isRefreshing ? "league data" : "selected squad data"}...
+              <p className="text-xs text-emerald-300/60">
+                ⏳ Loading {isRefreshing ? "league data" : "selected squad data"}...
               </p>
             ) : null}
-            {dataError ? <p className="text-xs text-amber-200">{dataError}</p> : null}
-            {apiStatus?.state === "missing_key" || apiStatus?.state === "quota_exceeded" || apiStatus?.state === "error" ? (
-              <p className="text-xs text-amber-200">{apiStatus.message}</p>
+            {dataError ? <p className="text-xs text-cardYellow">{dataError}</p> : null}
+            {apiStatus?.state === "missing_key" ||
+            apiStatus?.state === "quota_exceeded" ||
+            apiStatus?.state === "forbidden" ||
+            apiStatus?.state === "error" ? (
+              <p className="text-xs text-cardYellow">{apiStatus.message}</p>
             ) : null}
           </div>
         </section>
       ) : null}
 
+      {/* Replay controls */}
       {mode === "replay" ? (
-        <section className="grid gap-3 rounded-md border border-slate-700 bg-slate-950/60 p-3 lg:grid-cols-3">
-          <label className="flex flex-col gap-2 text-sm text-slate-100">
-            <span className="font-medium text-slate-200">Competition</span>
+        <section className="grid gap-3 rounded-xl border border-emerald-500/20 bg-panel/60 p-4 lg:grid-cols-3">
+          <label className="flex flex-col gap-1.5 text-sm text-emerald-100">
+            <span className="font-semibold text-emerald-300">Competition</span>
             <select
               value={competitionId}
               onChange={(event) => {
@@ -489,7 +579,7 @@ export default function SimulatorPage(): JSX.Element {
                 setReplaySeasonId(nextSeasonId);
                 void loadHistoricalMatches(nextCompetitionId, nextSeasonId);
               }}
-              className="rounded-md border border-slate-600 bg-slate-900 px-3 py-2 text-sm text-slate-50 outline-none transition focus:border-accent"
+              className="rounded-lg border border-emerald-500/30 bg-stadium px-3 py-2 text-sm text-emerald-50 outline-none transition focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/30"
             >
               {[...new Map(competitions.map((competition) => [competition.id, competition])).values()].map((competition) => (
                 <option key={competition.id} value={competition.id}>
@@ -498,8 +588,8 @@ export default function SimulatorPage(): JSX.Element {
               ))}
             </select>
           </label>
-          <label className="flex flex-col gap-2 text-sm text-slate-100">
-            <span className="font-medium text-slate-200">Season</span>
+          <label className="flex flex-col gap-1.5 text-sm text-emerald-100">
+            <span className="font-semibold text-emerald-300">Season</span>
             <select
               value={replaySeasonId}
               onChange={(event) => {
@@ -507,7 +597,7 @@ export default function SimulatorPage(): JSX.Element {
                 setReplaySeasonId(nextSeasonId);
                 void loadHistoricalMatches(competitionId, nextSeasonId);
               }}
-              className="rounded-md border border-slate-600 bg-slate-900 px-3 py-2 text-sm text-slate-50 outline-none transition focus:border-accent"
+              className="rounded-lg border border-emerald-500/30 bg-stadium px-3 py-2 text-sm text-emerald-50 outline-none transition focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/30"
             >
               {replaySeasons.map((competition) => (
                 <option key={competition.seasonId} value={competition.seasonId}>
@@ -516,12 +606,12 @@ export default function SimulatorPage(): JSX.Element {
               ))}
             </select>
           </label>
-          <label className="flex flex-col gap-2 text-sm text-slate-100">
-            <span className="font-medium text-slate-200">Match</span>
+          <label className="flex flex-col gap-1.5 text-sm text-emerald-100">
+            <span className="font-semibold text-emerald-300">Match</span>
             <select
               value={historicalMatchId}
               onChange={(event) => setHistoricalMatchId(event.target.value)}
-              className="rounded-md border border-slate-600 bg-slate-900 px-3 py-2 text-sm text-slate-50 outline-none transition focus:border-accent"
+              className="rounded-lg border border-emerald-500/30 bg-stadium px-3 py-2 text-sm text-emerald-50 outline-none transition focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400/30"
             >
               {historicalMatches.map((historicalMatch) => (
                 <option key={historicalMatch.id} value={historicalMatch.id}>
@@ -541,9 +631,20 @@ export default function SimulatorPage(): JSX.Element {
         simDisabled={isWorking || squadLoadingTeamIds.length > 0 || selectedHomeTeam.id === selectedAwayTeam.id}
         hasMatch={Boolean(match)}
         isPlaying={isPlaying}
-        onTogglePlay={() => setIsPlaying((value) => !value)}
+        onTogglePlay={() => {
+          if (match && playhead >= match.frames.length - 1) {
+            setPlayhead(0);
+            playheadRef.current = 0;
+            frameProgressRef.current = 0;
+            setFrameProgress(0);
+          }
+          setIsPlaying((value) => !value);
+        }}
         onRestartReplay={() => {
           setPlayhead(0);
+          playheadRef.current = 0;
+          frameProgressRef.current = 0;
+          setFrameProgress(0);
           setIsPlaying(Boolean(match));
         }}
         replaySpeed={replaySpeed}
@@ -557,8 +658,8 @@ export default function SimulatorPage(): JSX.Element {
         awayTeam={activeAwayTeam}
         homeScore={currentFrame.score.home}
         awayScore={currentFrame.score.away}
-        minute={currentFrame.minute}
-        second={currentFrame.second}
+        minute={interpolatedMinute}
+        second={interpolatedSecond}
         possession={{
           home: homePossession,
           away: awayPossession
@@ -570,7 +671,7 @@ export default function SimulatorPage(): JSX.Element {
           <Pitch2D
             frame={currentFrame}
             nextFrame={nextFrame}
-            frameDurationMs={frameDurationMs}
+            interpolationT={frameProgress}
             homeTeam={activeHomeTeam}
             awayTeam={activeAwayTeam}
             playerMeta={playerMeta}
